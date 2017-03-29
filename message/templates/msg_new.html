@@ -1,0 +1,22 @@
+{% extends "msg_index.html" %}
+
+{% block msj %}
+		<div class="row">
+		   	<div id="navbar" class="navbar-collapse collapse">
+          		<ul class="nav navbar-nav navbar-left">
+					<li><h4><span class="fa fa-envelope pull-left"></span>Nuevo mensaje</h4></li>
+              	</ul>
+			</div>
+			<div class="form-group">
+				<input type="text" placeholder="Escribe un nombre de usuario" required class="form-control">
+			</div>
+				 <div class="col-md-12 col-sm-12 col-xs-12 mail-reply">
+                       <textarea class="summernote">Type Your Message..</textarea>
+                 </div>
+			<div class="form-group">
+				<a class="btn btn-success">Enviar</a>
+				<a href="{% url 'msg_index' %}" class="btn btn-danger">Cancelar</a>
+			</div>
+		</div>
+	
+{% endblock %}

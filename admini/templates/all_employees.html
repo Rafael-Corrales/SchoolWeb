@@ -1,0 +1,48 @@
+{% extends "base_in_admin.html" %}
+
+{% block info %}
+      <div class="col-md-12" style="padding:20px;">
+      <div class="col-md-12 padding-0">
+      <div class="col-md-12 padding-0" align="center">
+ <br>
+   <div class="row container">
+    <div class="col-md-4">
+    <div class="col-md-4">
+      <a href="{% url 'new_employee' %}" class="btn btn-primary pull-right">Agregar nuevo empleado</a>
+    </div>
+  </div>
+	<h2>Listado de empleados</h2>
+	<div class="row container">
+			<div class="table-responsive">
+            <table id="datatable" class="table table-condensed table-hover table-striped">
+              <thead>
+                <tr>
+                  <th>Numero de identidad</th>
+                  <th>Nombre completo</th>
+                  <th>Direccion</th>
+                  <th>Telefono</th>
+                  <th>Sexo</th>
+                  <th>Cargo</th>
+                  <th>Usuario</th>
+                  <th>Editar</th>
+                  <th>Ver clases asignadas</th>
+                </tr>
+              </thead>
+              <tbody>           
+              </tbody>
+            </table>
+        </div>
+
+  </div>
+  </div>
+  </div>
+	</div>	
+{% endblock %}
+
+{% block js %}
+<script>
+    $(document).ready(function() {
+    $('#datatable').DataTable();
+  });
+</script> 
+{% endblock  %}

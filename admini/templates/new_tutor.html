@@ -1,0 +1,77 @@
+{% extends "base_in_admin.html" %}
+
+{% block info %}
+<div class="container" align="center">
+<br>
+	<h2>Agregar nuevo encargado</h2>
+	<div class="row container">
+		<div class="col-md-3"></div>
+		<div class="col-md-6">
+			<form action="" method="post">
+			{% csrf_token %}
+			<ul class="nav nav-tabs">
+  				<li class="active"><a data-toggle="tab" href="#datosalumno">Datos personales</a></li>
+  				<li><a data-toggle="tab" href="#datosu">Datos de usuario</a></li>
+  			</ul>
+
+			<div class="tab-content">
+  				<div id="datosalumno" class="tab-pane fade in active">
+					<br>
+    				<div class="form-group">
+						<label for="numidalumno">Numero de identidad</label>
+						<input type="text" name="numidalumno" id="numidalumno" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label for="firstnamealumno">Nombre</label>
+						<input type="text" name="firstnamealumno" id="firstnamealumno" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label for="lastnamealumno">Apellidos</label>
+						<input type="text" name="lastnamealumno" id="lastnamealumno" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label for="direcionalumno">Dirección</label>
+						<textarea rows="4" cols="50" name="direccionalumno" id="direccionalumno" class="form-control" required></textarea>
+					</div>
+					<div class="form-group">
+						<label for="phonenumberalumno">Telefono</label>
+						<input type="text" name="phonenumberalumno" id="phonenumberalumno" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label for="emailalumno">Correo</label>
+						<input type="email" name="emailalumno" id="emailalumno" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label for="sexoalumno">Sexo</label>
+						<select name="sexoalumno" id="sexoalumno" class="form-control" required>
+  							<option value="">Seleccione sexo</option>
+  							 {% for s in sexo  %}
+  								 <option value="{{ s.id }}"> {{ s }} </option>
+  							{% endfor %}
+						</select>
+					</div>
+					<br>
+  				</div>
+
+  				<div id="datosu" class="tab-pane fade">
+					<br>
+    				<div class="form-group">
+						<label for="user">Usuario</label>
+						<input type="text" name="user" id="user" class="form-control" required>
+					</div>
+    				<div class="form-group">
+						<label for="pass">Contraseña</label>
+						<input type="password" name="pass" id="pass" class="form-control" required>
+					</div>
+  				</div>
+
+  			
+			</div>
+			<div class="form-group">
+					<input type="submit" value="Agregar encargado" class="btn btn-primary">
+				</div>
+			</form>
+		</div>
+	</div>	
+	</div>
+{% endblock %}

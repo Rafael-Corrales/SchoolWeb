@@ -1,0 +1,41 @@
+{% extends "base_in_admin.html" %}
+
+{% block info %}
+ <br>
+ <div class="row container">
+    <div class="col-md-3">
+      <a href="{% url 'new_tutor' %}" class="btn btn-primary pull-right">Agregar nuevo encargado</a>
+    </div>
+  </div>
+	<h2>Listado de Encargado</h2>
+	<div class="row container">
+			<div class="table-responsive">
+            <table id="datatable" class="table table-condensed table-hover table-striped">
+              <thead>
+                <tr>
+                  <th>Numero de identidad</th>
+                  <th>Nombre completo</th>
+                  <th>Direccion</th>
+                  <th>Telefono</th>
+                  <th>Sexo</th>
+                  <th>Usuario</th>
+                  <th>Estado</th>
+                  <th>Editar</th>
+                  <th>Ver alumnos</th>
+                  <th>Agregar alumno</th>
+                </tr>
+              </thead>
+              <tbody>           
+              </tbody>
+            </table>
+          </div>
+	</div>	
+{% endblock %}
+
+{% block js %}
+<script>
+    $(document).ready(function() {
+    $('#datatable').DataTable();
+  });
+</script> 
+{% endblock  %}

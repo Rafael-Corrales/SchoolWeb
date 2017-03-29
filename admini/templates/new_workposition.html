@@ -1,0 +1,24 @@
+{% extends "base_in_admin.html" %}
+
+{% block info %}
+<div class="container" align="center">
+<br>
+	<h2>Aperturar año académico</h2>
+	<div class="row container">
+	<div class="col-md-3"></div>
+		<div class="col-md-6">
+			<form action="" method="post">
+			{% csrf_token %}
+				<div class="form-group">
+					<label for="cargo">Cargo</label>
+					<input type="text" name="cargo" id="cargo" class="form-control" required>
+				</div>
+
+				<div class="form-group">
+					<input type="submit" value="Agregar cargo" class="btn btn-primary">
+				</div>
+			</form>
+		</div>
+	</div>
+	</div>
+{% endblock %}

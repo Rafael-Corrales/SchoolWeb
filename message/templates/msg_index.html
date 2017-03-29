@@ -1,0 +1,84 @@
+{% extends "base_in_admin.html" %}
+
+{% block info %}
+<div class="container">
+<div class="row container">
+	<div class="col-md-11"><h3>Mensajes</h3>
+	<h4>Tienes 0 mensajes sin leer</h4></div>
+</div>
+<div class="row container">
+  <div class="col-md-3">
+  <br>
+    <a href="" class="btn btn-primary btn-md btn-3d">Redactar</a>
+    </div>
+
+</div>
+<br>
+		<div class="row container">
+        <div class="col-md-3 mail-left-content">
+                               <ul class="nav">
+                                <li></li>
+                                  <li><br></li>
+                                  <li><h5>Carpeta</h5></li>
+                                  <li>
+                                    <a href="{% url 'msg_index' %}" class="active"><span class="fa fa-inbox"></span> Recibidos</a>
+                                  </li>
+                                  <li>
+                                    <a href="{% url 'msg_enviados' %}"><span class="fa fa-send-o"></span> Enviados</a>
+                                  </li>
+                                  <li>
+                                    <a href=""><span class="fa fa-trash"></span>Papelera</a>
+                                  </li>
+                              </ul>
+            </div>
+                <div class="col-md-8 mail-right-content">
+                   <table id="datatable" class="table table-hover table-striped" width="100%" cellspacing="0">
+                      <thead>
+                        <tr>
+                          <th>Remitente</th>
+                          <th>Asunto</th>
+                          <th>Fecha</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                              <tr class="read">
+    
+                                    <td class="contact">
+                                      <a href="">Google  </a>
+                                    </td>
+                                     <td class="subject">
+                                      <a href="">Nunc nonummy metus. Mauris sollicitudin fermentum libero.</a>
+                                      </td>
+                                      <td class="time">Hace 5 minutos</td>
+                                  </tr>
+                                  <tr class="unread">
+                                    <td class="contact">Facebook</td>
+                                    <td class="subject">
+                                      <a href="">Quisque id odio. Maecenas nec odio et ante tincidunt tempus.</a>
+                                    </td>
+                                    <td class="time">Hace 9 minutos</td>
+                                  </tr>
+                                  <tr class="read">
+                                    <td class="contact">
+                                      <a href=""#>Priscilla Burke </a>
+                                    </td>
+                                     <td class="subject">
+                                        <a href="#">Curabitur at lacus ac velit ornare lobortis. </a></td>
+                                        <td>Hace una hora</td>
+                                  </tr>
+                                  </tbody>
+                              </table>
+                          </div>
+
+		</div>
+    </div>
+	
+{% endblock %}
+
+{% block js %}
+<script>
+    $(document).ready(function() {
+    $('#datatable').DataTable();
+  });
+</script> 
+{% endblock  %}

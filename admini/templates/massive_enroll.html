@@ -1,0 +1,35 @@
+{% extends "base_in_admin.html" %}
+
+{% block info %}
+
+<h2>Matricula masiva</h2>
+	<div class="row">
+
+		<div class="col-md-6">
+		<h3>Se matricularan los alumnos activos y aprobados al siguiente grado</h3>
+			<form action="" method="post">
+			{% csrf_token %}
+				<div class="form-group">
+					<label for="grado">Grado anterior</label>
+						<select name="grado" id="grado" class="form-control" required>
+  							<option value=""></option>
+  							<option value="">1ero B 2017</option>
+  							<option value="">2ndo B 2017</option>
+						</select>
+				</div>
+				<div class="form-group">
+					<label for="añoa">Grado a matricular</label>
+						<select name="añoa" id="añoa" class="form-control" required>
+  							<option value=""></option>
+  							<option value="">2ndo B 2018</option>
+  							<option value="">3ero B 2018</option>
+						</select>
+				</div>
+				<div class="form-group">
+					<input type="submit" value="Ofertar grado" class="btn btn-primary">
+				</div>
+			</form>
+		</div>
+	</div>
+	
+{% endblock %}

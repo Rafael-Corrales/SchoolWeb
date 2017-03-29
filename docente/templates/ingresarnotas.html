@@ -1,0 +1,47 @@
+{% extends "base_in_docente.html" %}
+
+{% block info %}
+  
+  <div class="row">
+      <div class="col-md-4">
+       <input type="text" class="form-control" placeholder="Buscar por Clase">
+      </div>
+    </div>
+
+  <h2>Listado de de alumnos de la clase</h2>
+  <br>
+    
+  
+  <div class="row">
+    <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Nombre completo</th>
+                  <th>Parcial 1</th>                    
+                  <th>Parcial 2</th>
+                  <th>Parcial 3</th>
+                  <th>Parcial 4</th>
+                  <th>Promedio</th>
+                </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>Alumno</td>
+                <td><input type="number" value="0"></td>              
+                <td><input type="number" value="0"></td>    
+                <td><input type="number" value="0"></td>
+                <td><input type="number" value="0"></td>
+                <td>100</td>
+             </tr>    
+              </tbody>
+            </table>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <button class="btn btn-primary">Guardar cambios</button>
+            </div>
+          </div>
+
+  </div> 
+{% endblock %}

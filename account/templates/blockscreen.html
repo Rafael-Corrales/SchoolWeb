@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block container %}
+    <div class="container">
+            <form class="form-signin" action="/account/login/" method="post">
+                    {% csrf_token %}
+                    <div class="panel periodic-login">
+                    <div class="panel-body text-center">
+                  <h1>.<span class="fa fa-graduation-cap fa-2x"></span></h1>
+                  <p class="element-name">SCHOOL WEB</p>
+                <div class="text-center" style="padding:5px;">
+                    <h3>{{ username }}</h3>
+                </div>
+                  <input type="hidden" name="username" id="username" value="{{ username }}">
+                  <div class="form-group form-animate-text" style="margin-top:40px !important;">
+                    {{ form.password }}
+                    <span class="bar"></span>
+                    <label>Contraseña</label>
+                  </div>
+                  <input type="submit" class="btn col-md-12" value="Iniciar sesión"/>
+                  </div>
+
+                </div>
+            </form>
+            </div>
+{% endblock %}

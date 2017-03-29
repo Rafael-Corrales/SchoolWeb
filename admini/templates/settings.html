@@ -1,0 +1,170 @@
+{% extends "base_in_admin.html" %}
+
+{% block info %}
+	<h2>Perfil de la escuela</h2>
+	<div class="row">
+		<div class="col-md-10">
+			<form action="" method="post">
+			{% csrf_token %}
+
+			<ul class="nav nav-tabs">
+  				<li class="active"><a data-toggle="tab" href="#datoses">Datos de la escuela</a></li>
+  				<li><a data-toggle="tab" href="#datosdirector">Datos del director</a></li>
+  				<li><a data-toggle="tab" href="#datoslogo">Logo de la escuela</a></li>
+  				<li><a data-toggle="tab" href="#datosactual">Datos actuales</a></li>
+			</ul>
+
+			<div class="tab-content">
+  				<div id="datoses" class="tab-pane fade in active">
+  				<br>
+  				<div class="col-md-6">
+					<div class="form-group">
+						<label for="nombre">Nombre</label>
+						<input type="text" name="nombre" id="nombre" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label for="phonenumber">Telefono</label>
+						<input type="text" name="phonenumber" id="phonenumber" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label for="direcion">Dirección</label>
+						<textarea rows="4" cols="50" name="direccion" id="direccion" class="form-control" required></textarea>
+					</div>
+				</div>
+				</div>
+
+				<div id="datoslogo" class="tab-pane fade">
+					<br>
+					<div class="col-md-6">
+					<div class="form-group">
+						<label for="logo">Logo</label>
+						<input type="file" name="logo" id="logo">
+					</div>
+					</div>
+				</div>
+
+				<div id="datosactual" class="tab-pane fade">
+					<br>
+					<div class="col-md-6">
+					<div class="form-group">
+						<label for="grado">Año academico actual</label>
+							<select name="grado" id="grado" class="form-control" required>
+  								<option value="">Seleccione</option>
+  								<option value="">2017</option>
+  								<option value="">2018</option>
+							</select>
+					</div>
+					<div class="form-group">
+						<label for="indice">Indice de aprobación</label>
+						<input type="number" name="indice" id="indice" min="0" max="100" class="form-control" required>
+					</div>
+					</div>
+				</div>
+
+				<div id="datosdirector" class="tab-pane fade">
+					<br>
+					<div class="col-md-6">
+					<div class="form-group">
+						<label for="nombre">Nombre Completo</label>
+						<input type="text" name="nombre" id="nombre" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label for="phonenumber">Telefono</label>
+						<input type="text" name="phonenumber" id="phonenumber" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label for="correo">Correo</label>
+						<input type="email" name="correo" id="correo" class="form-control" required>
+					</div>
+					</div>
+				</div>
+
+				<div id="datoubicacion" class="tab-pane fade">
+					<br>
+					<div id="mapa"></div>
+				</div>
+			</div>
+
+				<br>	
+				<div class="form-group">
+					<input type="submit" value="Guardar" class="btn btn-primary">
+				</div>
+
+			</form>
+		</div>
+	</div>	
+{% endblock %}
+
+{% block js %}
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbD-dO_tryQROxQlRmhrHL6Uv-j3Z_OQ4&callback=inicio"
+    async defer></script> 
+<script>
+	function inicio()
+	{
+		if (navigator.geolocation)
+		{
+			navigator.geolocation.getCurrentPosition(success, error);
+		} else {
+			alert("No hay soporte!");
+		}
+	}
+
+	function error(err)
+	{
+		var LAT = 37.7646411;
+		var LNG = -122.4446045;
+		var gMap = null;
+		var marker = null;
+		var markerSettings = null;
+		var mapSettings = null;
+		var gLatLon = null;
+
+		gLatLon = new google.maps.LatLng(LAT, LNG);
+		mapSettings = {
+			center: gLatLon,
+			zoom: 5,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		}
+
+		gMap = new google.maps.Map(document.getElementById('mapa'), mapSettings);
+		markerSettings = {
+			position: gLatLon,
+			map: gMap,
+			draggable: true,
+			title: 'Arrastre el marcador a la ubicación actual del centro educativo'
+			}
+		marker = new google.maps.Marker(markerSettings);
+	}
+
+	function success(pos)
+	{
+		var lat = pos.coords.latitude;
+		var lon = pos.coords.longitude;
+		
+		var gMap = null;
+		var marker = null;
+		var markerSettings = null;
+		var mapSettings = null;
+		var gLatLon = null;
+
+		gLatLon = new google.maps.LatLng(lat, lon);
+		mapSettings = {
+			center: gLatLon,
+			zoom: 5,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		}
+
+		gMap = new google.maps.Map(document.getElementById('mapa'), mapSettings);
+		markerSettings = {
+			position: gLatLon,
+			map: gMap,
+			draggable: true,
+			title: 'Arrastre el marcador a la ubicación actual del centro educativo'
+			}
+		marker = new google.maps.Marker(markerSettings);
+	}
+	inicio()
+
+</script>
+	
+{% endblock  %}

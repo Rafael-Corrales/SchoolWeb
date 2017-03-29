@@ -1,0 +1,143 @@
+{% extends "base_in.html" %}
+
+{% block miperfil %}
+     <li><a href="#"><span class="fa fa-user pull-left"></span> Mi Perfil</a></li>
+{% endblock %}
+{% block cambiarclave %}
+     <li><a href="#"><span class="fa fa-lock pull-left"></span>Cambiar contraseña</a></li>
+{% endblock   %}
+{% block navbar %}
+
+              <div class="sub-left-menu scroll">
+                <ul class="nav nav-list">  
+                    <li class="time">
+                      <h2 align="center" class="animated fadeInLeft">21:00</h2>
+                      <p class="animated fadeInRight">Lun,Octubre 1ero 2029</p>
+                    </li>
+                    <li class="ripple">
+                      <a href="{% url 'index' %}"class="tree-toggle nav-header"><span class="fa-home fa"></span>Inicio 
+                      </a>
+                    </li>
+                    <li class="ripple">
+                      <a class="tree-toggle nav-header">
+                        <span class="fa-wrench fa"></span> Mantenimiento
+                        <span class="fa-angle-right fa right-arrow text-right"></span>
+                      </a>
+                      <ul class="nav nav-list tree">
+                        <li class="ripple">
+                            <a class="sub-tree-toggle nav-header">
+                                <span class="fa fa-calendar"></span> Año academico
+                                <span class="fa-angle-right fa right-arrow text-right"></span>
+                            </a>
+                            <ul class="nav nav-list sub-tree">
+                                <li><a href="{% url 'new_year' %}">Aperturar año academico</a></li>
+                                <li><a href="{% url 'all_years' %}">Ver años academicos</a></li>
+                            </ul>
+                        </li>
+                        <li class="ripple">
+                            <a class="sub-tree-toggle nav-header">
+                                <span class="fa fa-sort-numeric-asc"></span> Grado
+                                <span class="fa-angle-right fa right-arrow text-right"></span>
+                            </a>
+                            <ul class="nav nav-list sub-tree">
+                                <li><a href="{% url 'new_grade' %}">Agregar grado</a></li>
+                                <li><a href="{% url 'all_grades' %}">Ver grados</a></li>
+                            </ul>
+                        </li>
+                        <li class="ripple">
+                            <a class="sub-tree-toggle nav-header">
+                                <span class="fa fa-sort-alpha-asc"></span> Sección
+                                <span class="fa-angle-right fa right-arrow text-right"></span>
+                            </a>
+                            <ul class="nav nav-list sub-tree">
+                                <li><a href="{% url 'new_section' %}">Agregar sección</a></li>
+                                <li><a href="{% url 'all_sections' %}">Ver secciones</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="ripple">
+                            <a class="sub-tree-toggle nav-header">
+                                <span class="fa fa-book"></span> Clase
+                                <span class="fa-angle-right fa right-arrow text-right"></span>
+                            </a>
+                            <ul class="nav nav-list sub-tree">
+                                <li><a href="{% url 'new_class' %}">Agregar clase</a></li>
+                                <li><a href="{% url 'all_classes' %}">Ver clases</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="ripple">
+                            <a class="sub-tree-toggle nav-header">
+                                <span class="fa fa-site-map"></span> Grado sección
+                                <span class="fa-angle-right fa right-arrow text-right"></span>
+                            </a>
+                            <ul class="nav nav-list sub-tree">
+                                <li><a href="{% url 'new_grade_section' %}">Agregar grado sección</a></li>
+                                <li><a href="{% url 'all_grades_section' %}">Ver grado sección</a></li>
+                            </ul>
+                        </li>
+                        <li class="ripple">
+                            <a href="{% url 'new_grade_class' %}" class="sub-tree-toggle nav-header">
+                                <span class="fa fa-folder-open"></span>Asignar plan de estudio
+                            </a>
+                        </li>
+
+                        </ul>
+                        </li>
+                    <li class="ripple">
+                      <a class="tree-toggle nav-header">
+                        <span class="fa-sitemap fa"></span>Oferta academica
+                        <span class="fa-angle-right fa right-arrow text-right"></span>
+                      </a>
+                      <ul class="nav nav-list tree">
+                        <li class="ripple">
+                            <a class="sub-tree-toggle nav-header">
+                                Grado ofertado
+                                <span class="fa-angle-right fa right-arrow text-right"></span>
+                            </a>
+                            <ul class="nav nav-list sub-tree">
+                                <li><a href="{% url 'offer_new_grade' %}">Ofertar grado</a></li>
+                                <li><a href="{% url 'all_grades_offer' %}">Ver grados ofertados</a></li>
+                            </ul>
+                        </li>
+                        <li class="ripple">
+                            <a class="sub-tree-toggle nav-header">
+                                Clase ofertada
+                                <span class="fa-angle-right fa right-arrow text-right"></span>
+                            </a>
+                            <ul class="nav nav-list sub-tree">
+                                <li><a href="{% url 'offer_new_class' %}">Ofertar clase</a></li>
+                                <li><a href="{% url 'all_classes_offer' %}">Ver clases ofertados</a></li>
+                            </ul>
+                        </li>
+                      </ul>
+                    </li>
+                    <li class="ripple"><a class="tree-toggle nav-header">
+                    <span class="fa fa-child"></span>Alumnos<span class="fa-angle-right fa right-arrow text-right"></span> </a>
+                      <ul class="nav nav-list tree">
+                        <li><a href="{% url 'new_student' %}">Agregar alumno</a></li>
+                        <li><a href="{% url 'all_students' %}">Ver alumnos</a></li>
+                        <li><a href="{% url 'new_tutor' %}">Agregar encargado</a></li>
+                        <li><a href="{% url 'all_tutors' %}">Ver encargado</a></li>
+                      </ul>
+                    </li>
+                    <li class="ripple"><a class="tree-toggle nav-header"><span class="fa fa-graduation-cap"></span> Matricula <span class="fa-angle-right fa right-arrow text-right"></span> </a>
+                      <ul class="nav nav-list tree">
+                        <li><a href="{% url 'new_enroll' %}">Matricular alumno</a></li>
+                        <li><a href="{% url 'enroll_massive' %}">Matricula masiva</a></li>
+                        <li><a href="{% url 'all_enroll' %}">Ver matriculas</a></li>
+                      </ul>
+                    </li>
+                    <li class="ripple"><a class="tree-toggle nav-header"><span class="fa fa-briefcase"></span> Empleado<span class="fa-angle-right fa right-arrow text-right"></span> </a>
+                      <ul class="nav nav-list tree">
+                        <li><a href="{% url 'new_employee' %}">Agregar empleado</a></li>
+                        <li><a href="{% url 'all_employees' %}">Ver empleado</a></li>
+                      </ul>
+                    </li>
+                    <li class="ripple"><a href="{% url 'all_users' %}" class="tree-toggle nav-header"><span class="fa fa-user"></span> Usuarios</a>
+                    </li>
+                    <li class="ripple"><a class="tree-toggle nav-header" href="{% url 'settings' %}"><span class="fa fa-info"></span> Perfil de la escuela</a>
+                    </li>
+                  </ul>
+                </div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "base_in_admin.html" %}
+
+{% block info %}
+      <div class="col-md-12" style="padding:20px;">
+      <div class="col-md-12 padding-0">
+      <div class="col-md-12 padding-0" align="center">
+ <br>
+ <div class="row container">
+
+    <div class="col-md-3">
+      <a href="{% url 'offer_new_grade' %}" class="btn btn-primary pull-right">Ofertar nueva grado</a>
+    </div>
+  </div>
+	<h2>Listado de grados ofertados</h2>
+	<div class="row container">
+	
+			<div class="table-responsive">
+            <table id="datatable" class="table table-condensed table-hover table-striped">
+              <thead>
+                <tr>
+                  <th>Grado ofertado</th>
+                  <th>Editar</th>
+                  <th>Alumnos matriculados</th>
+                </tr>
+              </thead>
+              <tbody>           
+              </tbody>
+            </table>
+          </div>
+          <div class="col-md-4">
+              <h4>Mostrando 0 al 0 de 0 registros</h3>
+          </div>
+          <div class="col-md-4"></div>
+          <div class="col-md-4">
+             <nav aria-label="...">
+                
+        <ul class="pagination pull-right">
+          <li class="disabled">
+            <span>
+              <span aria-hidden="true">Anterior</span>
+              </span>
+        </li>
+        <li class="active">
+        <span>1<span class="sr-only">(current)</span></span>
+        </li>
+          <li class="disabled">
+            <span>
+              <span aria-hidden="true">Siguiente</span>
+              </span>
+        </li>
+      </ul>
+    </nav>
+    </div>
+
+	</div>	
+{% endblock %}
+
+{% block js %}
+<script>
+    $(document).ready(function() {
+    $('#datatable').DataTable();
+  });
+</script> 
+{% endblock  %}

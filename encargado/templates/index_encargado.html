@@ -1,0 +1,54 @@
+{% extends "base_in_encargado.html" %}
+
+{% block info %}
+	<h3>Año academico actual: 2017 </h3>
+	<br>
+	<div class="row">
+  		<div class="col-md-3">
+  			<div class="panel panel-default">
+ 				<div class="panel-heading">Mis Alumnos</div>
+    			<div class="panel-body">
+    			<div class="row">
+     				<h3 align="center"><span align="center" class="fa fa-graduation-cap fa-2x"></span></h3>
+     				
+     			</div>
+     			<div class="row">
+     			<a href="{% url 'ver_alumnos' %}" class="btn btn-primary btn-block">Ver detalle</a>
+     			</div>
+    			</div>
+ 			</div>
+  		</div>
+
+  		<div class="col-md-3">
+  			<div class="panel panel-default">
+ 				<div class="panel-heading">Matricula de Alumno</div>
+    			<div class="panel-body">
+    			  <div class="row">
+     				<h3 align="center"><span align="center" class="fa fa-sitemap fa-2x"></span></h3>
+     				
+     			</div>
+     			<div class="row">
+     			<a href="{% url 'ver_matricula' %}" class="btn btn-primary btn-block">Ver detalle</a>
+     			</div>
+    			</div>
+ 			</div>
+  		</div>
+
+      <div class="col-md-3">
+        <div class="panel panel-default">
+        <div class="panel-heading">Historial de Alumno</div>
+          <div class="panel-body">
+            <div class="row">
+            <h3 align="center"><span align="center" class="fa fa-sitemap fa-2x"></span></h3>
+            
+          </div>
+          <div class="row">
+          <a href="{% url 'ver_historial' %}" class="btn btn-primary btn-block">Ver detalle</a>
+          </div>
+          </div>
+      </div>
+      </div>
+
+  </div>
+	
+{% endblock  %}

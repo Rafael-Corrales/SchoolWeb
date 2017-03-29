@@ -1,0 +1,47 @@
+{% extends "base_in_admin.html" %}
+
+{% block info %}
+      <div class="col-md-12" style="padding:20px;">
+      <div class="col-md-12 padding-0">
+      <div class="col-md-12 padding-0" align="center">
+ <br>
+  <div class="row container">
+    <div class="col-md-4">
+      <input type="text" class="form-control" placeholder="Buscar por grado ofertado">
+    </div>
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <a href="{% url 'offer_new_class' %}" class="btn btn-primary pull-right">Ofertar nueva clase</a>
+    </div>
+  </div>
+	<h2>Listado de clases ofertadas</h2>
+	<div class="row container">
+			<div class="table-responsive">
+            <table id="datatable" class="table table-condensed table-hover table-striped">
+              <thead>
+                <tr>
+                  <th>Grado ofertado</th>
+                  <th>Clase</th>
+                  <th>Docente</th>
+                  <th>Editar</th>
+                </tr>
+              </thead>
+              <tbody>           
+              </tbody>
+            </table>
+        </div>
+  </div>
+  </div>
+  </div>
+
+	</div>	
+{% endblock %}
+
+{% block js %}
+<script>
+    $(document).ready(function() {
+    $('#datatable').DataTable();
+  });
+</script>
+  
+{% endblock  %}

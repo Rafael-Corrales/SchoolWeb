@@ -1,0 +1,86 @@
+{% extends "base_in_admin.html" %}
+
+{% block info %}
+<div class="container" align="center">
+<br>
+	<h2>Agregar nuevo empleado</h2>
+	<div class="row container">
+	<div class="col-md-3"></div>
+		<div class="col-md-6">
+			<form action="" method="post">
+			{% csrf_token %}
+			<ul class="nav nav-tabs">
+  				<li class="active"><a data-toggle="tab" href="#datose">Datos personales</a></li>
+  				<li><a data-toggle="tab" href="#datosu">Datos de usuario</a></li>
+			</ul>
+
+			<div class="tab-content">
+  				<div id="datose" class="tab-pane fade in active">
+					<br>
+    				<div class="form-group">
+						<label for="numid">Numero de identidad</label>
+						<input type="text" name="numid" id="numid" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label for="firstname">Nombre</label>
+						<input type="text" name="first" id="first" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label for="lastname">Apellido</label>
+						<input type="text" name="lastname" id="lastname" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label for="direcion">Direccion</label>
+						<textarea rows="4" cols="50" name="direccion" id="direccion" class="form-control" required></textarea>
+					</div>
+					<div class="form-group">
+						<label for="phonenumber">Telefono</label>
+						<input type="text" name="phonenumber" id="phonenumber" class="form-control" required>
+					</div>
+
+					<div class="form-group">
+						<label for="email">Correo</label>
+						<input type="email" name="email" id="email" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label for="sexo">Sexo</label>
+						<select name="sexo" id="sexo" class="form-control" required>
+  							<option value="">Seleccione sexo</option>
+  							{% for s in sexo  %}
+  								 <option value="{{ s.id }}"> {{ s }} </option>
+  							{% endfor %}
+						</select>
+					</div>
+
+					<div class="form-group">
+						<label for="cargo">Cargo</label>
+						<select name="cargo" id="cargo" class="form-control" required>
+  							<option value="">Seleccione cargo</option>
+  							<option value="">Director</option>
+  							<option value="">Docente</option>
+						</select>
+					</div>
+					<br>
+  				</div>
+  				<div id="datosu" class="tab-pane fade">
+					<br>
+    				<div class="form-group">
+						<label for="user">Usuario</label>
+						<input type="text" name="user" id="user" class="form-control" required>
+					</div>
+    				<div class="form-group">
+						<label for="pass">Contraseña</label>
+						<input type="password" name="pass" id="pass" class="form-control" required>
+					</div>
+					<br>
+  				</div>
+			</div>
+
+			<div class="form-group">
+					<input type="submit" value="Agregar empleado" class="btn btn-primary">
+				</div>
+			</form>
+		</div>
+	</div>	
+	</div>
+{% endblock %}

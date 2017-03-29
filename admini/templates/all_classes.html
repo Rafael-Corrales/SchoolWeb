@@ -1,0 +1,94 @@
+{% extends "base_in_admin.html" %}
+
+{% block info %}
+      <div class="col-md-12" style="padding:20px;">
+      <div class="col-md-12 padding-0">
+      <div class="col-md-12 padding-0" align="center">
+  <br>
+  <div class="row container">
+    <div class="col-md-3">
+      <a href="{% url 'new_class' %}" class="btn btn-primary pull-right btn-block">Nueva clase</a>
+    </div>
+  </div>
+	<h2>Listado de clases</h2>
+	<div class="row container">
+			<div class="table-responsive">
+            <table id="datatable" class="table table-condensed table-hover table-striped" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>Clase</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>Hola</td>
+                <td>Hola</td>
+                <td>
+                  <div class="btn-group">
+                    <button class="dropdown-toggle btn btn-primary btn-block" data-toggle="dropdown" aria-expanded="true">Acciones &nbsp<span class="fa fa-caret-down"></span></button>
+                    <ul class="dropdown-menu">
+                      <li><a href="">Editar <span class="fa fa-pencil pull-left"></span></a></li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+      </div>
+	</div>	
+
+
+  <div class="modal fade" id="edit_class" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Editar clase</h4>
+      </div>
+      <div class="modal-body">
+        <form action="" method="post">
+                <div class="form-group">
+                      <label for="clase">Clase</label>
+                      <input type="text" name="clase" id="claseedit" class="form-control" required>
+                </div>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancelar</button>
+          <button type="submit" class="btn btn-success"><i class="fa fa-check"></i>Actualizar</button>
+        </form>
+      </div>
+  </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
+
+
+{% endblock %}
+
+{% block js %}
+  <script>
+  $(document).ready(function() {
+    $('#datatable').DataTable();
+
+  $('.btn-editar').click(function(e)
+  {
+    e.preventDefault();
+    var _id = $(this).attr('data-id');
+    var _clase = $(this).attr('data-clase');
+    $("#claseedit").val(_clase);
+    $.ajax({
+      data: {'id': _id},
+      url: '/admini/class/edit/' + _id + '/',
+      type: 'get',
+      success: function(data){
+        $("#claseedit").val(data.fields.clase);
+        console.log(data)
+        }
+    });
+  });
+});
+  </script>
+
+  
+{% endblock  %}
