@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
 from django.db import models
@@ -63,13 +64,13 @@ class GradoClase(models.Model):
 	def __str__(self):
 		return self.clasegrado
 
-@python_2_unicode_compatible
-class Anio(models.Model):
-	inicio = models.DateTimeField()
-	fin = models.DateTimeField()
 
-	def __str__(self):
-		return self.fin
+class Anio(models.Model):
+	inicio = models.DateField()
+	fin = models.DateField()
+
+	def __unicode__(self):
+		return str(self.fin)
 
 @python_2_unicode_compatible
 class OfertaGrado(models.Model):
@@ -118,6 +119,7 @@ class Perfil(models.Model):
 	telefono_f = models.CharField(max_length=9, blank=True, null=True)
 	telefono_c = models.CharField(max_length=9, blank=True, null=True)
 	usuario = models.OneToOneField(User, related_name='Perfil')
+	sexo = models.ForeignKey(Sexo, null=True, blank=True)
 	es_admin = models.BooleanField(default=False)
 	es_secre = models.BooleanField(default=False)
 	es_docente = models.BooleanField(default=False)
@@ -132,6 +134,7 @@ class Alumno(models.Model):
 	nombre = models.CharField(max_length=40)
 	apellido = models.CharField(max_length=40)
 	direccion = models.CharField(max_length=100)
+	sexo = models.ForeignKey(Sexo, null=True, blank=True)
 	telefono_f = models.CharField(max_length=9,)
 	telefono_c = models.CharField(max_length=9)
 	activo = models.BooleanField(default=True)
@@ -149,7 +152,7 @@ class Alumno(models.Model):
 
 @python_2_unicode_compatible
 class EncargadoAlumno(models.Model):
-	encargado = models.ForeignKey(Perfil)
+	encargado = models.ForeignKey(User)
 	alumno = models.ForeignKey(Alumno)
 
 	class Meta:
@@ -163,31 +166,30 @@ class EncargadoAlumno(models.Model):
 	def __str__(self):
 		return self.encal
 
-@python_2_unicode_compatible
 class OfertaClase(models.Model):
 	gradoclase = models.ForeignKey(GradoClase)
 	ofertagrado = models.ForeignKey(OfertaGrado)
-	docente = models.ForeignKey(Perfil)
+	docente = models.ForeignKey(User)
 
 	class Meta:
 		unique_together = ('gradoclase', 'ofertagrado', 'docente')
 
-	def __str__(self):
-		return self.gradoclase
+	def __unicode__(self):
+		return str(self.gradoclase)
 
-@python_2_unicode_compatible
+
 class Matricula(models.Model):
 	alumno = models.ForeignKey(Alumno)
 	ofertagrado = models.ForeignKey(OfertaGrado)
-	fecha = models.DateTimeField()
+	fecha = models.DateTimeField(auto_now_add=True)
 
 	class Meta:
 		unique_together = ('alumno', 'ofertagrado')
 
-	def __str__(self):
-		return self.alumno
+	def __unicode__(self):
+		return str(self.alumno)
 
-@python_2_unicode_compatible
+
 class DetalleMatricula(models.Model):
 	matricula = models.ForeignKey(Matricula)
 	ofertaclase = models.ForeignKey(OfertaClase)
@@ -201,12 +203,12 @@ class DetalleMatricula(models.Model):
 		unique_together = ('matricula', 'ofertaclase')
 
 	def _promedio(self):
-		return (self.nota1 + self.nota2 + self.nota3 + self.nota4) / 4
+		return ((self.nota1 + self.nota2 + self.nota3 + self.nota4) / 4)
 
 	promedio = property(_promedio)
 
-	def __str__(self):
-		return self.promedio
+	def __unicode__(self):
+		return str(self.ofertaclase)
 
 
 @python_2_unicode_compatible

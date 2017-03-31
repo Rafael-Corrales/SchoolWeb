@@ -1,23 +1,18 @@
 {% extends "base_in.html" %}
 
 {% block navbar %}
-        <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li><a href="{% url 'index_encargado' %}">Inicio<span class="pull-right fa fa-home" style="color:black"></span></a>
-            </li>
-            <li><a href="" class="dropdown-toggle" data-toggle="dropdown">Alumnos <span class="pull-right fa fa-calendar" style="color:black"></span></a>
-                    <ul class="dropdown-menu forAnimate" role="menu">
-                        <li><a class="dropdown-item" href="{% url 'ver_grado' %}">Ver Grado</a></li>
-                        <li><a class="dropdown-item" href="{% url 'ver_notas' %}">Ver Notas</a></li>
-                    </ul>
-            </li>
-            <li><a href="" class="dropdown-toggle" data-toggle="dropdown">Matricula <span class="pull-right fa fa-sort-numeric-asc" style="color:black"></span></a>
-                    <ul class="dropdown-menu forAnimate" role="menu">
-                        <li><a class="dropdown-item" href="{% url 'ver_matricula' %}">Ver Matricula</a></li>
-                        <li><a class="dropdown-item" href="{% url 'ver_historial' %}">Ver Historial</a></li>
-                    </ul>
-            </li>
-            
-          </ul>
-        </div>
+
+              <div class="sub-left-menu scroll">
+                <ul class="nav nav-list">  
+                    <li class="time">
+                      <h2 align="center" class="animated fadeInLeft">21:00</h2>
+                      <p class="animated fadeInRight">Lun,Octubre 1ero 2029</p>
+                    </li>
+                    <li class="ripple">
+                      <a href="{% url 'index_encargado' %}"class="tree-toggle nav-header"><span class="fa-home fa"></span>Inicio 
+                      </a>
+                    </li>
+                    
+                  </ul>
+                </div>
 {% endblock %}

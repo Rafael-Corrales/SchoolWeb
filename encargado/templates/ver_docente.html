@@ -1,25 +1,50 @@
 {% extends "base_in_encargado.html" %}
 
 {% block info %}
-   <br>
+      <div class="col-md-12" style="padding:20px;">
+      <div class="col-md-12 padding-0">
+      <div class="col-md-12 padding-0" align="center">
+  <br>
    
-	<h2>Docente de mi Alumno</h2>
-	<div class="row">
+	<h2>Docente(s) de mi Alumno</h2>
+	<div class="row container">
 			<div class="table-responsive">
-            <table class="table table-condensed table-hover table-striped">
+            <table id="datatable" class="table table-condensed table-hover table-striped">
               <thead>
                 <tr>
                   <th>Nombre del Docente</th>
+                  <th>Clase</th>
                   <th>Direccion</th>
-                  <th>Telefono</th>
-                  <th>Correo</th>
+                  <th>Telefono Fijo</th>
+                  <th>Telefono Celular</th>
                 </tr>
               </thead>
               <tbody> 
-                   
+                   {% for o in oc %}
+                     <tr>
+                       <td>{{ o.docente.username }}</td>
+                       <td>{{ o.gradoclase }}</td>
+                       <td>{{ o.docente.Perfil.direccion }}</td>
+                       <td>{{ o.docente.Perfil.telefono_f }}</td>
+                       <td>{{ o.docente.Perfil.telefono_c }}</td>
+                     </tr>
+                   {% endfor %}
               </tbody>
             </table>
           
          
 	</div>	
+  </div>
+  </div>
+  </div>
 {% endblock %}
+
+{% block js %}
+  <script>
+  $(document).ready(function() {
+    $('#datatable').DataTable();
+});
+  </script>
+
+  
+{% endblock  %}
