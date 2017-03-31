@@ -70,14 +70,13 @@ class Anio(models.Model):
 	fin = models.DateField()
 
 	def __unicode__(self):
-		return str(self.fin)
+		return str(self.fin.year)
 
 @python_2_unicode_compatible
 class OfertaGrado(models.Model):
 	gradoseccion = models.ForeignKey(GradoSeccion)
 	anio = models.ForeignKey(Anio)
-	capacidad = models.IntegerField()
-	disponibles = models.IntegerField()
+	cupos = models.IntegerField()
 
 	class Meta:
 		unique_together = ('gradoseccion', 'anio')

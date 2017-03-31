@@ -16,25 +16,105 @@
             <table id="datatable" class="table table-condensed table-hover table-striped">
               <thead>
                 <tr>
-                  <th>Año academico</th>
+                  <th>Inicio</th>
+                  <th>Fin</th>
                   <th>Editar</th>
-                  <th>Grados ofertados</th>
+
                 </tr>
               </thead>
-              <tbody>           
+              <tbody>
+                {% for a in anio  %}
+                  <tr>
+                    <td>{{ a.inicio }}</td>
+                    <td> {{ a.fin }}</td>
+                    <td>
+                    <div class="btn-group">
+                    <button class="dropdown-toggle btn btn-primary btn-3d btn-sm" data-toggle="dropdown" aria-expanded="true">Acciones &nbsp<span class="fa fa-caret-down"></span></button>
+                    <ul class="dropdown-menu">
+                      <li><a class="btn-editar" href="" data-id="{{ a.id }}" data-inicio="{{ a.inicio }}" data-fin="{{ a.fin }}"data-toggle="modal" data-target="#edit_year">Editar<span class="fa fa-pencil pull-left "></span></a></li>
+                      <li><a href="">Ver grados ofertados
+                      <span class="fa fa-pencil pull-left "></span></a></li>
+                    </ul>
+                  </div>
+                    </td>
+                  </tr>             
+                {% endfor %}           
               </tbody>
             </table>
           </div>
+          </div>
+
+  <div class="modal fade" id="edit_year" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Editar año academico
+        </h4>
+      </div>
+      <div class="modal-body">
+        <form action="" method="post">
+        {% csrf_token %}
+                      <input type="hidden" id="idano" name="id">
+                              <div class="form-group">
+          <label for="inicio">Inicio</label>
+          <input type="date" name="inicio" id="inicio" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="fin">Fin</label>
+          <input type="date" name="fin" id="fin" class="form-control" required>
+        </div>
+                <button type="button" class="btn btn-danger btn-3d" data-dismiss="modal"><i class="fa fa-times"></i> Cancelar</button>
+          <button type="submit" class="btn btn-success btn-3d btn-actualizar"><i class="fa fa-check"></i>Actualizar</button>
+        </form>
+      </div>
+  </div>
+  </div>
+</div>
+
 </div>
 </div>
-</div>
-	</div>	
+</div>	
 {% endblock %}
 
 {% block js %}
 <script>
     $(document).ready(function() {
     $('#datatable').DataTable();
+
+    $('.btn-editar').click(function(e)
+    {
+      e.preventDefault();
+      var _id = $(this).attr('data-id');
+      var _inicio = $(this).attr('data-inicio');
+      var _fin = $(this).attr('data-fin');
+      alert(_inicio)
+      alert(_fin)
+      $("#inicio").val(_inicio);
+      $("#fin").val(_fin); 
+      $("#idano").val(_id);  
+    });
+
+        $('.btn-actualizar').click(function(e){
+          e.preventDefault();
+          
+          var csfrm = $('input[name=csrfmiddlewaretoken]').val()
+          $.ajax({
+            type:'POST',
+            url:'/admini/class/edit/' + _idclase + '/',
+            data:{
+            clase: _clase,
+            id: _idclase,
+            csrfmiddlewaretoken: csfrm
+            },
+            success: function(){
+              location.reload()
+            },
+            error: function()
+            {
+            }
+
+        });
   });
+      });
 </script> 
 {% endblock  %}

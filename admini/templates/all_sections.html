@@ -17,7 +17,8 @@
               <thead>
                 <tr>
                   <th>Sección</th> 
-                  <th>Editar</th>
+                  <th>Estado</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>   
@@ -30,23 +31,20 @@
                     {% if s.activo == False %}
                       <td><button class="btn btn-danger btn-activo" data-section="{{ s }}" data-activo="{{ s.activo }}" data-toggle='modal' data-target='#active_section'>Inactivo</button></td>
                     {% endif %}
-                    <td> <button class="btn btn-primary btn-editar" data-id="{{ s.id }}" data-section="{{ s }}" data-toggle='modal' data-target='#edit_section'><span class="fa fa-pencil pull-left"></span>Editar</button></td>
-                    </tr>
-                                      {% empty %}
-                  <div clas="col-md-6">
-                    <div align ="center" class="form-group">
-                        <h4>No hay secciones registradas hasta el momento</h4>
+                    <td>                   
+                    <div class="btn-group">
+                      <button class="dropdown-toggle btn btn-primary btn-3d btn-sm" data-toggle="dropdown" aria-expanded="true">Acciones &nbsp<span class="fa fa-caret-down"></span></button>
+                      <ul class="dropdown-menu">
+                        <li><a class="btn-editar" data-id="{{ s.id }}" data-section="{{ s }}" data-toggle='modal' data-target='#edit_section'>Editar<span class="fa fa-pencil pull-left "><span></a></li>
+                      </ul>
                     </div>
-                  </div>
-                  <br>
+                    </tr>
                   {% endfor %}              
               </tbody>
             </table>
           </div>
 </div>
-</div>
-</div>
-	</div>	
+	
 
 <div class="modal fade" id="edit_section" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
   <div class="modal-dialog">
@@ -56,12 +54,15 @@
       </div>
       <div class="modal-body">
         <form action="" method="post">
-                <div class="form-group">
-                      <label for="clase">Grado</label>
-                      <input type="text" name="clase" id="sectionedit" class="form-control" required>
-                </div>
+                           {% csrf_token %}
+                      <input type="hidden" id="idsectionedit" name="id">
+                      <div class="form-group form-animate-text" style="margin-top:40px !important;">
+                    <input type="text" id="sectionedit" name="clase" class="form-text" required>
+                    <span class="bar"></span>
+                    <label>Sección</label>
+                  </div>
                 <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancelar</button>
-          <button type="submit" class="btn btn-success"><i class="fa fa-check"></i>Actualizar</button>
+          <button type="submit" class="btn btn-success btn-actualizar"><i class="fa fa-check"></i>Actualizar</button>
         </form>
       </div>
   </div>
@@ -104,26 +105,50 @@
       </div>
   </div>
   </div>
-</div> 
+</div>
+
+</div>
+</div>
+</div>
 {% endblock %}
 
 {% block js %}
   <script>
+$(document).ready(function() {
+  $('#datatable').DataTable();
+
   $('.btn-editar').click(function(e)
   {
     e.preventDefault();
     var _id = $(this).attr('data-id');
     var _section = $(this).attr('data-section');
+    alert(_section)
     $("#sectionedit").val(_section);
-    $.ajax({
-      data: {'id': _id},
-      url: '/admini/class/edit/' + _id + '/',
-        type: 'get',
-      success: function(data){
-        $("#claseedit").val(data.fields.clase);
-        }
-    });
+    $("#idsectionedit").val(_id); 
   });
+
+      $('.btn-actualizar').click(function(e){
+          e.preventDefault();
+          var _seccion = $('#sectionedit').val()
+          var _idseccion = $('#idsectionedit').val()
+          var csfrm = $('input[name=csrfmiddlewaretoken]').val()
+          $.ajax({
+            type:'POST',
+            url:'/admini/section/edit/' + _idseccion + '/',
+            data:{
+            seccion: _seccion,
+            id: _idseccion,
+            csrfmiddlewaretoken: csfrm
+            },
+            success: function(){
+              location.reload()
+            },
+            error: function()
+            {
+            }
+
+        });
+});
 
   $('.btn-activo').click(function(e){
     e.preventDefault();
@@ -136,13 +161,7 @@
     }
     $(".msj").text(msj);
   });
-  </script>
-{% endblock  %}
 
-{% block js %}
-<script>
-    $(document).ready(function() {
-    $('#datatable').DataTable();
-  });
-</script> 
+});
+  </script>
 {% endblock  %}

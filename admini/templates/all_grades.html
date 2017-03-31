@@ -14,7 +14,7 @@
 	<h2>Listado de grados</h2>
 	<div class="row container">
 			<div class="table-responsive">
-            <table id="tablagrados" class="table table-condensed table-hover table-striped">
+            <table id="datatable" class="table table-condensed table-hover table-striped">
               <thead>
                 <tr>
                   <th>Grado</th>
@@ -32,25 +32,24 @@
                     {% if g.activo == False %}
                       <td><button class="btn btn-danger">Inactivo</button></td>
                     {% endif %}
-                    <td><button class="btn btn-primary btn-editar" data-id="{{ g.id }}" data-grade="{{ g }}" data-toggle='modal' data-target='#edit_grade'><span class="fa fa-pencil pull-left"></span>Editar</button></td>
-                    <td><button class="btn btn-primary"><span class="fa fa-book pull-left"></span>Ver plan de estudio</button></td>
-                    <td><button class="btn btn-primary"><span class="fa fa-sort-alpha-asc pull-left"></span>Ver secciones</button></td>
-                    </tr>
-                  {% empty %}
-                  <div clas="col-md-6">
-                    <div align ="center" class="form-group">
-                        <h4>No hay grados registrados hasta el momento</h4>
-                    </div>
+                  <td>
+                  <div class="btn-group">
+                    <button class="dropdown-toggle btn btn-primary btn-3d btn-sm" data-toggle="dropdown" aria-expanded="true">Acciones &nbsp<span class="fa fa-caret-down"></span></button>
+                    <ul class="dropdown-menu">
+                      <li><a class="btn-editar" data-id="{{ g.id }}" data-grade="{{ g }}" data-toggle='modal' data-target='#edit_grade'>Editar<span class="fa fa-pencil pull-left "></span></a></li>
+                      <li><a href="" data-id="{{ g.id }}"><span class="fa fa-book pull-left"></span>Ver plan de estudio</a></li>
+                      <li><a href="" data-id="{{ g.id }}"><span class="fa fa-sort-alpha-asc pull-left pull-left"></span>Ver secciones</a></li>
+                    </ul>
                   </div>
-                  <br>
+                    </td>
+                    </tr>
+
                   {% endfor %}                
               </tbody>
             </table>
           </div>
 </div>
-</div>
-</div>
-	</div>
+
 
     <div class="modal fade" id="edit_grade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
   <div class="modal-dialog">
@@ -60,22 +59,61 @@
       </div>
       <div class="modal-body">
         <form action="" method="post">
-                <div class="form-group">
-                      <label for="clase">Grado</label>
-                      <input type="text" name="clase" id="gradeedit" class="form-control" required>
-                </div>
+              {% csrf_token %}
+                      <input type="hidden" id="idgradeedit" name="id">
+                      <div class="form-group form-animate-text" style="margin-top:40px !important;">
+                    <input type="text" id="gradeedit" name="clase" class="form-text" required>
+                    <span class="bar"></span>
+                    <label>Grado</label>
+                  </div>
                 <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancelar</button>
-          <button type="submit" class="btn btn-success"><i class="fa fa-check"></i>Actualizar</button>
+          <button type="submit" class="btn btn-success btn-actualizar"><i class="fa fa-check"></i>Actualizar</button>
         </form>
       </div>
   </div>
   </div>
-</div>	
+</div>
+
+</div>
+</div>
+</div>
 {% endblock %}
 {% block js %}
 <script>
     $(document).ready(function() {
     $('#datatable').DataTable();
+
+    $('.btn-editar').click(function(e)
+    {
+      e.preventDefault();
+      var _id = $(this).attr('data-id');
+      var _grado = $(this).attr('data-grade');
+      $("#gradeedit").val(_grado);
+      $("#idgradeedit").val(_id);  
+    });
+
+        $('.btn-actualizar').click(function(e){
+          e.preventDefault();
+          var _grado = $('#gradeedit').val()
+          var _idgrado = $('#idgradeedit').val()
+          var csfrm = $('input[name=csrfmiddlewaretoken]').val()
+          $.ajax({
+            type:'POST',
+            url:'/admini/grade/edit/' + _idgrado + '/',
+            data:{
+            grado: _grado,
+            id: _idgrado,
+            csrfmiddlewaretoken: csfrm
+            },
+            success: function(){
+              location.reload()
+            },
+            error: function()
+            {
+            }
+
+        });
+});
   });
 </script> 
 {% endblock  %}

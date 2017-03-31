@@ -19,38 +19,19 @@
               <thead>
                 <tr>
                   <th>Grado ofertado</th>
-                  <th>Editar</th>
-                  <th>Alumnos matriculados</th>
+                  <th>Cupos</th>
                 </tr>
               </thead>
-              <tbody>           
+              <tbody> 
+              {% for o_g in og  %}
+                         <tr>
+                           <td>{{ o_g }}</td>
+                           <td> {{ o_g.cupos }}</td>
+                         </tr> 
+              {% endfor %}          
               </tbody>
             </table>
           </div>
-          <div class="col-md-4">
-              <h4>Mostrando 0 al 0 de 0 registros</h3>
-          </div>
-          <div class="col-md-4"></div>
-          <div class="col-md-4">
-             <nav aria-label="...">
-                
-        <ul class="pagination pull-right">
-          <li class="disabled">
-            <span>
-              <span aria-hidden="true">Anterior</span>
-              </span>
-        </li>
-        <li class="active">
-        <span>1<span class="sr-only">(current)</span></span>
-        </li>
-          <li class="disabled">
-            <span>
-              <span aria-hidden="true">Siguiente</span>
-              </span>
-        </li>
-      </ul>
-    </nav>
-    </div>
 
 	</div>	
 {% endblock %}

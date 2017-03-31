@@ -22,18 +22,25 @@
                 </tr>
               </thead>
               <tbody>
-              <tr>
-                <td>Hola</td>
-                <td>Hola</td>
+              {% for c in clase %}
+                <tr>
+                <td> {{ c }}</td>
+                {% if c.activo == True %}
+                  <td> <button class="btn btn-success btn-3d btn-sm">Activo</button></td>
+                {% endif %}
+                {% if c.activo == False %}
+                  <td> <button class="btn btn-success btn-3d btn-sm">Inactivo</button></td>
+                {% endif %}
                 <td>
                   <div class="btn-group">
-                    <button class="dropdown-toggle btn btn-primary btn-block" data-toggle="dropdown" aria-expanded="true">Acciones &nbsp<span class="fa fa-caret-down"></span></button>
+                    <button class="dropdown-toggle btn btn-primary btn-3d btn-sm" data-toggle="dropdown" aria-expanded="true">Acciones &nbsp<span class="fa fa-caret-down"></span></button>
                     <ul class="dropdown-menu">
-                      <li><a href="">Editar <span class="fa fa-pencil pull-left"></span></a></li>
+                      <li><a class="btn-editar" href="" data-id="{{ c.id }}" data-clase="{{ c }}" data-toggle="modal" data-target="#edit_class">Editar<span class="fa fa-pencil pull-left "></span></a></li>
                     </ul>
                   </div>
                 </td>
               </tr>
+              {% endfor %}
               </tbody>
             </table>
       </div>
@@ -48,12 +55,15 @@
       </div>
       <div class="modal-body">
         <form action="" method="post">
-                <div class="form-group">
-                      <label for="clase">Clase</label>
-                      <input type="text" name="clase" id="claseedit" class="form-control" required>
-                </div>
-                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancelar</button>
-          <button type="submit" class="btn btn-success"><i class="fa fa-check"></i>Actualizar</button>
+        {% csrf_token %}
+                      <input type="hidden" id="idclaseedit" name="id">
+                      <div class="form-group form-animate-text" style="margin-top:40px !important;">
+                    <input type="text" id="claseedit" name="clase" class="form-text" required>
+                    <span class="bar"></span>
+                    <label>Clase</label>
+                  </div>
+                <button type="button" class="btn btn-danger btn-3d" data-dismiss="modal"><i class="fa fa-times"></i> Cancelar</button>
+          <button type="submit" class="btn btn-success btn-3d btn-actualizar"><i class="fa fa-check"></i>Actualizar</button>
         </form>
       </div>
   </div>
@@ -71,24 +81,37 @@
   $(document).ready(function() {
     $('#datatable').DataTable();
 
-  $('.btn-editar').click(function(e)
-  {
-    e.preventDefault();
-    var _id = $(this).attr('data-id');
-    var _clase = $(this).attr('data-clase');
-    $("#claseedit").val(_clase);
-    $.ajax({
-      data: {'id': _id},
-      url: '/admini/class/edit/' + _id + '/',
-      type: 'get',
-      success: function(data){
-        $("#claseedit").val(data.fields.clase);
-        console.log(data)
-        }
+    $('.btn-editar').click(function(e)
+    {
+      e.preventDefault();
+      var _id = $(this).attr('data-id');
+      var _clase = $(this).attr('data-clase');
+      $("#claseedit").val(_clase);
+      $("#idclaseedit").val(_id);  
     });
-  });
-});
-  </script>
 
-  
+        $('.btn-actualizar').click(function(e){
+          e.preventDefault();
+          var _clase = $('#claseedit').val()
+          var _idclase = $('#idclaseedit').val()
+          var csfrm = $('input[name=csrfmiddlewaretoken]').val()
+          $.ajax({
+            type:'POST',
+            url:'/admini/class/edit/' + _idclase + '/',
+            data:{
+            clase: _clase,
+            id: _idclase,
+            csrfmiddlewaretoken: csfrm
+            },
+            success: function(){
+              location.reload()
+            },
+            error: function()
+            {
+            }
+
+        });
+});
+});
+  </script>  
 {% endblock  %}

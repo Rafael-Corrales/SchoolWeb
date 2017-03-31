@@ -7,23 +7,29 @@
 	<div class="row container">
 	<div class="col-md-3"></div>
 		<div class="col-md-6">
-			<form action="" method="post">
+			<form action="/admini/grade_offer/new/add/" method="post">
 			{% csrf_token %}
 				<div class="form-group">
 					<label for="añoa">Año académico</label>
-						<select name="añoa" id="añoa" class="form-control" required>
+						<select name="anio" id="anio" class="form-control" required>
   							<option value="">Seleccione año</option>
-  							<option value="">2017</option>
-  							<option value="">2018</option>
+  							{% for a in anio  %}
+  								<option value="{{ a.id }}">{{ a }}</option>
+  							{% endfor %}
 						</select>
 				<div class="form-group">
 					<label for="grado">Grado Sección</label>
-						<select name="grado" id="grado" class="form-control selectpicker" multiple required>
-  							<option value="">1ero A</option>
-  							<option value="">1ero B</option>
-  							<option value="">2ndo</option>
+						<select name="gradoseccion[]" id="gradoseccion" class="form-control selectpicker" multiple required>
+  							{% for g_s in gs  %}
+  								<option value="{{ g_s.id }}">{{ g_s }}</option>
+  							{% endfor %}
 						</select>
 				</div>
+					<div class="form-group">
+						<label for="cupos">Cupos disponibles</label>
+						<input type="number" name="cupos" id="cupos" min="0" max="100" class="form-control" required>
+					</div>
+
 				</div>
 				<div class="form-group">
 					<input type="submit" value="Ofertar grado" class="btn btn-primary">

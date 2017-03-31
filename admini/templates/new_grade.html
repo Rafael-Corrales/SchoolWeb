@@ -3,16 +3,20 @@
 {% block info %}
 <div class="container" align="center">
 <br>
-	<h2>Agregar nuevo grado</h2>
+<div class="row">
+	<div class="col-md-offset-3 col-md-6" id="mensaje"></div>
 	<div class="row container">
 	<div class="col-md-3"></div>
 		<div class="col-md-6">
-			<form action="" method="post">
+		<br>
+		<h2>Agregar nuevo grado</h2>
+			<form action="" id="new_grade" method="post">
 			{% csrf_token %}
-				<div class="form-group">
-					<label for="grado">Grado</label>
-					<input type="text" name="grado" id="grado" class="form-control" required>
-				</div>
+				<div class="form-group form-animate-text" style="margin-top:40px !important;">
+                    <input type="text" id="grado" name="grado" class="form-text" required>
+                    <span class="bar"></span>
+                    <label>Grado</label>
+                  </div>
 
 				<div class="form-group">
 					<input type="submit" value="Agregar grado" class="btn btn-primary">
@@ -21,4 +25,28 @@
 		</div>
 	</div>	
 	</div>
+	</div>
 {% endblock %}
+
+{% block js %}
+	<script>
+		$(document).on('submit', '#new_grade', function(e){
+			e.preventDefault();
+			var _grado = $('#grado').val()
+			var csfrm = $('input[name=csrfmiddlewaretoken]').val()
+			$.ajax({
+				type:'POST',
+				url:'/admini/grade/new/add/',
+				data:{
+					grado: _grado,
+					csrfmiddlewaretoken: csfrm
+				},
+				success: function(){
+					var html = '<div class="alert alert-success alert-3d alert-dismissible fade in" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button><strong><span class="fa fa-check fa-2x"></span></strong> Se ingreso el grado ' + _grado + ' satisfactoriamente.</div>'
+					$('#mensaje').html(html)
+					$('#grado').val('')
+				}
+			});
+		});
+	</script>
+{% endblock  %}
