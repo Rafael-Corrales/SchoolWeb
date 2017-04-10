@@ -203,7 +203,24 @@ def all_classes_offer(request):
 
 @login_required()
 def new_enroll(request):
-	return render(request, 'new_enroll.html')
+	alumnos = Alumno.objects.all()
+	ofergra = OfertaGrado.objects.all()
+	return render(request, 'new_enroll.html', {'alumnos':alumnos, 'ofergra': ofergra})
+
+def new_enroll_add(request):
+	if request.method == 'POST':
+		try:
+			gradoOfertado = request.POST.get('ofergrado')
+			alumnos = request.POST.getlist('alumno[]')
+			go = OfertaGrado.objects.get(pk=gradoOfertado)
+			for alumno in alumnos:	
+				a = Alumno.objects.get(pk=alumno)
+				go.cupos = go.cupos - 1
+				mat = Matricula(alumno = a, ofertagrado = go)	
+				mat.save()
+			return HttpResponseRedirect('/admini/enroll/new/')
+		except Exception as e:
+			return HttpResponse(e)
 
 @login_required()
 def enroll_massive(request):
@@ -211,7 +228,8 @@ def enroll_massive(request):
 
 @login_required()
 def all_enroll(request):
-	return render(request, 'all_enroll.html')
+	m = Matricula.objects.all()
+	return render(request, 'all_enroll.html', {'m':m})
 
 @login_required()
 def new_student(request):

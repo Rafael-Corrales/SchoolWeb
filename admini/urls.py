@@ -32,6 +32,7 @@ urlpatterns = [
 	url(r'^enroll/new/$', views.new_enroll, name='new_enroll'),
 	url(r'^enroll/massive/$', views.enroll_massive, name='enroll_massive'),
 	url(r'^enroll/all/$', views.all_enroll, name='all_enroll'),
+	url(r'^enroll/new/add/$', views.new_enroll_add, name='new_enroll_add'),
 	url(r'^student/new/$', views.new_student, name='new_student'),
 	url(r'^student/all/$', views.all_students, name='all_students'),
 	url(r'^workposition/new/$', views.new_workposition, name='new_workposition'),
@@ -44,4 +45,5 @@ urlpatterns = [
 	url(r'^tutor/new/$', views.new_tutor, name='new_tutor'),
 	url(r'^settings/$', views.settings, name='settings'),
 	url(r'^events/$', views.events, name='events'),
+
 ]

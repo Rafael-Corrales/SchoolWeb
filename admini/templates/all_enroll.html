@@ -20,12 +20,14 @@
                   <th>Fecha</th>
                   <th>Alumno</th>
                   <th>Grado Ofertado</th>
-                  <th>Editar</th>
-                  <th>Eliminar</th>
-                  <th>Ver detalle</th>
                 </tr>
               </thead>
-              <tbody>           
+              <tbody> 
+                  {% for mat in m %}
+                    <tr> <td>{{ mat.fecha }}</td> 
+                    <td>{{ mat.alumno }}</td>
+                    <td>{{ mat.ofertagrado }}</td> </tr>
+                  {% endfor %}          
               </tbody>
             </table>
           </div>

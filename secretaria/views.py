@@ -3,8 +3,9 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth.models import User
+from django.http import HttpResponse, HttpResponseRedirect
 
-from admini.models import Sexo
+from admini.models import *
 
 @login_required()
 def index_secretaria(request):
@@ -12,7 +13,9 @@ def index_secretaria(request):
 
 @login_required()
 def new_enroll_s(request):
-	return render(request, 'new_enroll_s.html')
+	alumnos = Alumno.objects.all()
+	ofergra = OfertaGrado.objects.all()
+	return render(request, 'new_enroll_s.html', {'alumnos':alumnos, 'ofergra': ofergra})
 
 @login_required()
 def enroll_massive_s(request):
@@ -20,7 +23,27 @@ def enroll_massive_s(request):
 
 @login_required()
 def all_enroll_s(request):
-	return render(request, 'all_enroll_s.html')
+	m = Matricula.objects.all()
+	return render(request, 'all_enroll_s.html', {'m':m})
+
+
+def new_enroll_add_s(request):
+	if request.method == 'POST':
+		try:
+			gradoOfertado = request.POST.get('ofergrado')
+			alumnos = request.POST.getlist('alumno[]')
+			go = OfertaGrado.objects.get(pk=gradoOfertado)
+			#gs = GradoSeccion.objects.get(pk= go.GradoSeccion)
+			#g = Grado.objects.get(pk=gs.grado)
+			for alumno in alumnos:	
+				a = Alumno.objects.get(pk=alumno)
+				go.cupos = go.cupos - 1
+				mat = Matricula(alumno = a, ofertagrado = go)	
+				i = mat.save()
+
+			return HttpResponseRedirect('/secretaria/enroll/new/')
+		except Exception as e:
+			return HttpResponse(e)
 
 @login_required()
 def new_student_s(request):
