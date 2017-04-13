@@ -1,0 +1,33 @@
+{% extends "base_in_docente.html" %}
+
+{% block info %}
+      <div class="col-md-12" style="padding:20px;">
+        <div class="col-md-12 padding-0">
+              <h3 align="center">Año lectivo: 2017</h3>
+              <br>
+              <div class="col-md-12 padding-0">
+                  <div class="col-md-4">
+
+                  </div>
+                             
+                                  <div class="col-md-4">
+                                    <div class="panel box-v1">
+                                    <div class="panel-heading bg-white border-none">
+                                        <div class="col-md-12 col-sm-12 col-xs-12 text-left padding-0">
+                                          <h4 class="text-center">Mis Clases</h4>
+                                        </div>
+                                      </div>
+                                      <div class="panel-body text-center">
+                                        <h3>
+                                           <span class="fa fa-book fa-2x"></span>
+                                           </h3>
+                                        <h4>Total: 30</h4>
+                                        <a href="{% url 'ver_misclases' %}" class="btn btn-md btn-primary btn-3d btn-block ">Mas información</a>
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                          
+                    </div>
+                </div>
+{% endblock  %}
