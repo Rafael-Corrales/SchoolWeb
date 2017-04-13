@@ -1,18 +1,18 @@
 {% extends "base_in.html" %}
 
 {% block navbar %}
-        <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li><a href="{% url 'index' %}">Inicio<span class="pull-right fa fa-home" style="color:black"></span></a>
-            </li>
-            <li><a href="" class="dropdown-toggle" data-toggle="dropdown">Mis Clases <span class="pull-right fa fa-calendar" style="color:black"></span></a>
-                    <ul class="dropdown-menu forAnimate" role="menu">
-                        <li><a class="dropdown-item" href="{% url 'vermisclases' %}">Ver mis Clases</a></li>
-                        <li><a class="dropdown-item" href="{% url 'ingresarnota' %}">Ingresar Notas</a></li>
-                        <li><a class="dropdown-item" href="{% url 'veralumnos' %}">Listado de alumnos</a></li>
-                    </ul>
-            </li>
-          </ul>
-        </div>
+      <div class="sub-left-menu scroll">
+                <ul class="nav nav-list">  
+                    <li class="time">
+                      <h2 align="center" class="animated fadeInLeft">21:00</h2>
+                      <p class="animated fadeInRight">Lun,Octubre 1ero 2029</p>
+                    </li>
+                    <li class="ripple">
+                      <a href="{% url 'index_docente' %}"class="tree-toggle nav-header"><span class="fa-home fa"></span>Inicio 
+                      </a>
+                    </li>
+
+                  </ul>
+                </div>
            
 {% endblock %}

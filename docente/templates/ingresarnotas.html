@@ -9,11 +9,12 @@
       <br>
 
   
-    
-  
-  <div class="row container">
+  <form action="/docente/ingresarnota/save/" method="POST">
+  {% csrf_token %}
+    <div class="row container">
   <h2>Listado de de alumnos de la clase</h2>
   <br>
+  <input type="hidden" value="{{ of.id }}" name="idof">
     <div class="table-responsive">
            <table id="datatable" class="table table-striped">
               <thead>
@@ -26,20 +27,25 @@
                   <th>Promedio</th>
                 </tr>
               </thead>
-                <tbody> 
+              <tbody> 
                 {% for ma in detm %}
-                  <tr>
-                    <td>{{ ma.matricula.alumno }}  </td>q
-                    <td><input type="number" value="{{ ma.nota1}}"></td>                    
-                    <td><input type="number" value="{{ ma.nota2}}"></td>                    
-                    <td><input type="number" value="{{ ma.nota3}}"></td>                    
-                    <td><input type="number" value="{{ ma.nota4}}"></td>                    
-                    <td>{{ ma.promedio }} </td>
-                  
-                  
-      
+                {% if ma.matricula.ofertagrado == of.ofertagrado %}
+                     <tr>
+                    <td>{{ ma.matricula.alumno }} <input name="id" type="hidden" value="{{ ma.id }}"></td>
+                    <td><input min="0" max="100" name="nota1" type="number" value="{{ ma.nota1}}"></td>                    
+                    <td><input min="0" max="100" name="nota2"type="number" value="{{ ma.nota2}}"></td>                    
+                    <td><input min="0" max="100" name="nota3" type="number" value="{{ ma.nota3}}"></td>                    
+                    <td><input min="0" max="100" name="nota4" type="number" value="{{ ma.nota4}}"></td>
+                    {% if ma.promedio >= 70 %}
+                      <td style="color: #40F716">{{ ma.promedio }} %</td>
+                    {% else %}
+                      <td style="color: Red">{{ ma.promedio }} %</td>
+                    {% endif %}                    
                   </tr>
+                  {% endif %}
                 {% endfor %}
+              
+               
               </tbody>
             </table>
           </div>
@@ -48,7 +54,9 @@
               <button class="btn btn-primary">Guardar cambios</button>
             </div>
           </div>
-
+  
+  
+  </form>
   </div> 
 
 </div>
