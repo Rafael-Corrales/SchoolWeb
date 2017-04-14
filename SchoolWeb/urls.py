@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^admini/', include('admini.urls')),
     url(r'^encargado/', include('encargado.urls')),
     url(r'^message/', include('message.urls')),
+     url(r'^events/', include('events.urls')),
     url(r'^secretaria/', include('secretaria.urls')),
     url(r'^docente/', include('docente.urls')),
     url(r'^$', index, name='form_login'),

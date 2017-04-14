@@ -1,0 +1,103 @@
+{% extends "base_in_admin.html" %}
+
+{% block info %}
+      <div class="col-md-12" style="padding:20px;">
+      <div class="col-md-12 padding-0">
+      <div class="col-md-12 padding-0" align="center">
+ <br>
+   <div class="row container">
+  </div>
+	<h2>Historial de clases de {{ alu.nombre }} {{ alu.apellido }}</h2>
+	<div class="row container">
+			<div class="table-responsive">
+            <table id="datatable" class="table table-condensed table-hover table-striped">
+              <thead>
+                <tr>
+                  <th>Año</th>
+                  <th>Grado Sección</th>
+                  <th>Clase</th>
+                  <th>Promedio</th>
+                </tr>
+              </thead>
+              <tbody>   
+                 {% for dms in dm %}
+                  <tr>
+                    <td> {{ dms.matricula.ofertagrado.anio }}</td>    
+                    <td>{{ dms.matricula.ofertagrado.gradoseccion }}</td>       
+                    <td> {{ dms.ofertaclase.gradoclase.clase }} </td>
+                    <td> {{ dms.promedio }} </td>
+                    </tr>
+                  {% endfor %}              
+              </tbody>
+            </table>
+          </div>
+</div>
+	
+</div>
+</div>
+ <li>  <h2 align="center"><canvas style="display:none;" width="220px" height="250px" id="myCanvasImage"></canvas></h2></li>
+</div>
+{% endblock %}
+
+{% block js %}
+  <script>
+$(document).ready(function() {
+      var hoy = new Date();
+  var dd = hoy.getDate();
+  var mm = hoy.getMonth()+1; //hoy es 0!
+  var yyyy = hoy.getFullYear();
+  var canvas = document.getElementById("myCanvasImage");
+  var ctx = canvas.getContext("2d");
+  var img = new Image();
+  img.src = "/media/{{ logo }}";
+  ctx.drawImage(img, 0, 0);
+  var imagen = canvas.toDataURL();
+console.log(imagen);;
+
+  if(dd<10) {
+      dd='0'+dd
+  } 
+
+  if(mm<10) {
+      mm='0'+mm
+  } 
+
+    hoy = dd+'/'+mm+'/'+yyyy;
+      var table = $('#datatable').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend:    'excelHtml5',
+                text:      '<i class="fa fa-file-excel-o fa-2x"></i>',
+                titleAttr: 'Exportar a Excel'
+            },
+            {
+                extend:    'csvHtml5',
+                text:      '<i class="fa fa-file-text-o fa-2x"></i>',
+                titleAttr: 'Exportar CSV'
+            },
+            {
+                extend:    'pdfHtml5',
+                text:      '<i class="fa fa-file-pdf-o fa-2x"></i>',
+                titleAttr: 'Descargar PDF',
+                filename: 'Historial de clases de {{ alu.nombre }} {{ alu.apellido }} ',
+                title: '{{ nombreescuela }}             \n' + hoy + '\n \n Historial de clases de {{ alu.nombre }} {{ alu.apellido }} ',
+                                customize: function ( doc ) {
+                    doc.content.splice( 1, 0, {
+                        margin: [ 0, 0, 0, 12 ],
+                        alignment: 'center',
+                        image: imagen
+                      });
+                }
+            },
+            {
+                extend:    'print',
+                text:      '<i class="fa fa-print fa-2x"></i>',
+                titleAttr: 'Imprimir',
+                title: '{{ nombreescuela }} \n \n Historial de clases de {{ alu.nombre }} {{ alu.apellido }} '
+            },
+        ]
+    } );
+});
+  </script>
+{% endblock  %}

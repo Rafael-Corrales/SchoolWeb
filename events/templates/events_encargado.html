@@ -1,0 +1,107 @@
+{% extends "base_in_encargado.html" %}
+
+{% block info  %}
+	    <div class="col-md-12">
+                                <div class="panel box-v4">
+                                    <div class="panel-heading bg-white border-none">
+                                      <h3>Eventos</h3>
+                                    </div>
+                                    <div class="panel-body padding-0">
+                                        <div class="col-md-12 col-xs-12 col-md-12 padding-0 box-v4-alert">
+                                            <h2>Se ha agregado un evento recientemente</h2>
+                                            <p>Semana de examenes del primer parcial</p>
+                                            <b><span class="fa fa-clock"></span> 9 de abril al 15 de abril</b>
+                                            <div class="btn-group pull-right">
+                                                <a class="btn btn-primary btn-md"  href="{% url 'events_all' %}">Listar eventos</a>
+                                            </div>
+                                            
+                                        </div>
+   
+                                        <div class="calendar">
+                                          
+                                        </div>
+                                    </div>
+                                </div> 
+                            </div>
+
+<div class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Agregar evento</h4>
+      </div>
+      <div class="modal-body">
+      	<form action="/events/add/" method="post">
+                {% csrf_token %}
+                <div class="form-group row">
+                    <h5>&nbsp &nbsp Inicio</h5>
+                    <div class="col-md-6"><input type="date" name="iniciofecha" id="iniciofecha" class="form-control" required></div>            
+                    <div class="col-md-6"><input type="time" name="iniciohora" id="iniciohora" class="form-control" required></div>
+                </div>
+
+                <div class="form-group row">
+                    <h5>&nbsp &nbsp Fin</h5>
+                    <div class="col-md-6"><input type="date" name="finfecha" id="finfecha" class="form-control" required></div>            
+                    <div class="col-md-6"><input type="time" name="finhora" id="finhora" class="form-control" required></div>
+                </div>
+                
+                  <div class="form-group form-animate-text" style="margin-top:40px !important;">
+                    <input type="text" name="titulo" id="titulo" class="form-text" required>
+                    <span class="bar"></span>
+                    <label>Titulo</label>
+                </div>
+                <div class="form-group">
+                    <label for="descripcion">Descripción</label>
+                    <textarea name="descripcion" id="descripcion" cols="30" rows="2" class="form-control"></textarea>
+                </div>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancelar</button>
+          <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Agregar</button>
+        </form>  
+      
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock   %}
+
+{% block  js %}
+	<script>
+	         $('.dashboard .calendar').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            },
+            lang: 'es-ES',
+            monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+            monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+            dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
+            dayNamesShort: ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'],
+            businessHours: true, // display business hours
+            editable: false,
+            events: [
+                {% for i in eventos  %}
+                    {
+                        id: "{{ i.id }}",
+                        title: "{{ i.titulo}}",
+                        start: '{{ i.inicio|date:"Y-m-d H:i:s" }}',
+                        end: '{{ i.fin|date:"Y-m-d H:i:s" }}',
+                        description: '{{ i.descripcion }}'
+                    },
+                {% endfor %}
+            ],
+            eventClick: function(event) {
+        },
+        buttonText: {
+            today: 'Hoy',
+            month: 'Mes',
+            week:  'Semana',
+            day:   'Día',
+            list:  'Lista'
+        }
+        });
+	</script>
+{% endblock  %}

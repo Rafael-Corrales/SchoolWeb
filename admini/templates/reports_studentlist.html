@@ -1,0 +1,56 @@
+{% extends "base_in_admin.html" %}
+
+{% block info %}
+      <div class="col-md-12" style="padding:20px;">
+      <div class="col-md-12 padding-0">
+      <div class="col-md-12 padding-0" align="center">
+ <br>
+   <div class="row container">
+  </div>
+	<h2>Listado de grados ofertados</h2>
+  <h5>Seleccione un grado para ver sus alumnos</h5>
+	<div class="row container">
+			<div class="table-responsive">
+            <table id="datatable" class="table table-condensed table-hover table-striped">
+              <thead>
+                <tr>
+                  <th>Año</th> 
+                  <th>Grado</th>
+                  <th>Sección</th>
+                  <th>Listado</th>
+                </tr>
+              </thead>
+              <tbody>   
+                 {% for o in og %}
+                  <tr>
+                    <td> {{ o.anio }}</td>
+                    <td> {{ o.gradoseccion.grado}}</td>    
+                    <td>{{ o.gradoseccion.seccion }}</td> 
+                    <td>    
+                    <div class="btn-group">
+                      <button class="dropdown-toggle btn btn-primary btn-3d btn-sm" data-toggle="dropdown" aria-expanded="true">Acciones &nbsp<span class="fa fa-caret-down"></span></button>
+                      <ul class="dropdown-menu">
+                        <li><a class="btn-editar" data-id="{{ a.id }}" href="/admini/reports/studentlist/{{ o.id}}/">Ver alumnos<span class="fa fa-pencil pull-left "><span></a></li>
+                      </ul>
+                    </div>
+                    </td>
+                    </tr>
+                  {% endfor %}              
+              </tbody>
+            </table>
+          </div>
+</div>
+	
+
+</div>
+</div>
+</div>
+{% endblock %}
+
+{% block js %}
+  <script>
+$(document).ready(function() {
+  $('#datatable').DataTable();
+});
+  </script>
+{% endblock  %}

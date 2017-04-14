@@ -1,0 +1,80 @@
+{% extends "msg_index_docente.html" %}
+
+{% block msg %}
+
+                <div class="col-md-8 mail-right-content">
+                   <table id="datatable" class="table table-hover" width="100%" cellspacing="0">
+                      <thead>
+                        <tr>
+                          <th>Destinatario</th>
+                          <th>Asunto</th>
+                          <th>Fecha</th>
+                          <th>Acciones</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for msj in msjse  %}
+                              <tr class="read">
+                                  <td class="contact">
+                                    {{ msj.destinatario }}
+                                    </td>
+                                     <td class="subject">
+                                     {{ msj.asunto }}
+                                      </td>
+                                      <td class="time"><span title="{{ msj.fecha }}">Hace {{ msj.fecha| timesince }}</span></td>
+                                      <td>
+                                      <div class="btn-group">
+                    <button class="dropdown-toggle btn btn-primary btn-3d btn-sm" data-toggle="dropdown" aria-expanded="true">Acciones &nbsp<span class="fa fa-caret-down"></span></button>
+                    <ul class="dropdown-menu">
+                      <li><a class="btn-leer" data-id="{{ msj.id }}" data-asunto="{{ msj }}"  data-contenido="{{ msj.contenido }}" data-destinatario="{{ msj.destinatario }}"
+                      data-destinatario-id="{{ msj.destinatario.id }}" data-toggle="modal" data-target="#view_msg" data-nombre-archivo="{{ msj.archivo }}" data-archivo="/media/{{ msj.archivo }}">Leer<span class="fa fa-eye pull-left "></span></a></li>
+                      <li><a class="" href="/message/delete/{{ msj.id }}/" data-id="" data-clase="">Eliminar<span class="fa fa-trash pull-left "></span></a></li>
+                    </ul>
+                  </div>
+                                      </td>
+                                  </tr>
+                      {% endfor %}
+                                  </tbody>
+                              </table>
+                          </div>
+{% endblock %}
+
+{% block js %}
+<script>
+    $(document).ready(function() {
+    $('#id_destinatario').attr("multiple", 'multiple')
+    $("#id_destinatario").select2({
+      tags: true
+    });
+
+    $('#datatable').DataTable();
+    $("#id_archivo").filestyle({input: false});
+    $("#id_archivo").filestyle('size', 'sm');
+    $("#id_archivo").filestyle('buttonName', 'btn-primary btn-md btn btn-3d');
+    $("#id_archivo").filestyle('buttonText', 'Adjuntar archivo');
+    $("#id_archivo").attr('data-iconName','fa fa-folder-open-o');;
+    $(".icon-span-filestyle").removeClass('glyphicon glyphicon-folder-open')
+    $(".icon-span-filestyle").addClass('fa fa-folder-open-o')
+    $("#id_asunto").addClass('form-text')
+    $("#id_contenido").addClass('form-control')
+    $("#id_contenido").attr('rows', '4')
+
+    $('.btn-leer').click(function(e)
+    {
+      e.preventDefault();
+      var _asunto = $(this).attr('data-asunto');
+      var _contenido = $(this).attr('data-contenido');
+      var _destinatario = $(this).attr('data-destinatario');
+      var _archivo = $(this).attr('data-archivo');
+      var _nombre_archivo = $(this).attr('data-nombre-archivo');
+      var _id = $(this).attr('data-id');
+      $("#asuntoo").text("Asunto: " + _asunto);
+      $("#contenidoo").text(_contenido) ;
+      $("#modal-title").text("Mensaje para " + _destinatario)
+      $("#archivo").text(_nombre_archivo)
+      $("#archivo").attr("href", _archivo)
+    });
+
+  });
+</script> 
+{% endblock  %}

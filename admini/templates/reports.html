@@ -1,0 +1,90 @@
+{% extends "base_in_admin.html" %}
+
+{% block info %}
+      <div class="col-md-12" style="padding:20px;">
+        <div class="col-md-12 padding-0">
+              <h3 align="center">Año lectivo: {{ aniolectivo }}</h3>
+              <br>
+              <div class="col-md-12 padding-0">
+                    <div class="col-md-4">
+                                    <div class="panel box-v1">
+                                      <div class="panel-heading bg-white border-none">
+                                        <div class="col-md-12 col-sm-12 col-xs-12 text-left padding-0">
+                                          <h4 class="text-left">Historial del alumno</h4>
+                                        </div>
+
+                                      </div>
+                                      <div class="panel-body text-center">
+                                        <h4>
+                                           <span class="fa fa-user fa-3x"></span>
+                                           </h4>
+                                        <h3>.</h3>
+        
+                                      </div>
+                                                                                               <a href="/admini/reports/historial/">
+                                <div class="panel-footer">
+                                    <span class="pull-center">Mas informacion</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-4">
+                                                                        <div class="panel box-v1">
+                                      <div class="panel-heading bg-white border-none">
+                                        <div class="col-md-12 col-sm-12 col-xs-12 text-left padding-0">
+                                          <h4 class="text-left">Listado de alumnos por grado</h4>
+                                        </div>
+
+                                      </div>
+                                      <div class="panel-body text-center">
+                                        <h4>
+                                           <span class="fa fa-users fa-3x"></span>
+                                           </h4>
+                                        <h3>.</h3>
+        
+                                      </div>
+                                                                                               <a href="/admini/reports/studentlist/">
+                                <div class="panel-footer">
+                                    <span class="pull-center">Mas informacion</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+
+                                    </div>
+                                </div>
+                                                      <div class="col-md-4">
+                                                                        <div class="panel box-v1">
+                                      <div class="panel-heading bg-white border-none">
+                                        <div class="col-md-12 col-sm-12 col-xs-12 text-left padding-0">
+                                          <h4 class="text-left">Excelencia academica por grado</h4>
+                                        </div>
+
+                                      </div>
+                                      <div class="panel-body text-center">
+                                        <h4>
+                                           <span class="fa fa-trophy fa-3x"></span>
+                                           </h4>
+                                        <h3>.</h3>
+        
+                                      </div>
+                                                                                               <a href="/admini/grade_offer/current/">
+                                <div class="panel-footer">
+                                    <span class="pull-center">Mas informacion</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+
+                                    </div>
+                                </div>
+                                                       
+                            </div>
+                    </div>
+                </div>
+{% endblock  %}

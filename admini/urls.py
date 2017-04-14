@@ -43,7 +43,17 @@ urlpatterns = [
 	url(r'^user/all/$', views.all_users, name='all_users'),
 	url(r'^tutor/all/$', views.all_tutors, name='all_tutors'),
 	url(r'^tutor/new/$', views.new_tutor, name='new_tutor'),
+	url(r'^grade/(?P<pk>\d+)/sections/$', views.sections_by_grade, name='sections_by_grade'),
+	url(r'^grade/(?P<pk>\d+)/classes/$', views.classes_by_grade, name='classes_by_grade'),
+	url(r'^grade_offer/current/$', views.current_grades_offer, name='current_grades_offer'),
+	url(r'^class_offer/current/$', views.current_classes_offer, name='current_classes_offer'),
+	url(r'^enroll/current/$', views.current_enroll, name='current_enroll'),
 	url(r'^settings/$', views.settings, name='settings'),
-	url(r'^events/$', views.events, name='events'),
+	url(r'^settings/save/$', views.settings_save, name='settings_save'),
+	url(r'^reports/$', views.reports, name='reports'),
+	url(r'^reports/historial/$', views.reports_historial, name='reports_historial'),
+	url(r'^reports/historial/(?P<pk>\d+)/$', views.reports_historial_bystudent, name='reports_historial_bystudent'),
+	url(r'^reports/studentlist/$', views.reports_studentlist, name='reports_bystudentlist'),
+	url(r'^reports/studentlist/(?P<pk>\d+)/$', views.reports_studentlist_bygrade, name='reports_studentlist_bygrade'),
 
 ]

@@ -1,0 +1,188 @@
+{% extends "base_in_encargado.html" %}
+
+{% block info %}
+      <div class="col-md-12" style="padding:20px;">
+      <div class="col-md-12 padding-0">
+      <div class="col-md-12 padding-0" align="center">
+      <br>
+
+                                          
+  <br>
+	<div class="row container">
+	<div class="btn-group pull-left">
+                                   
+                                                <a class="btn btn-primary btn-md"  href="{% url 'events' %}">Ir al calendario</a>
+                                            </div>
+                                            <br>
+                                            <h2>Listado de eventos</h2>
+	<div class="table-responsive">
+            <table id="datatable" class="table table-condensed table-hover table-striped">
+              <thead>
+                <tr>
+                  <th>Evento</th>
+                  <th>Descripcion</th>
+                  <th>Inicio</th>
+                  <th>Fin</th>
+                  <th>Publicado</th>
+                </tr>
+              </thead>
+              <tbody>
+                  {% for e in eventos %}
+                  <tr>
+                    <td> {{ e.titulo }} </td>
+                    <td> {{ e.descripcion }} </td>
+                    <td> {{ e.inicio }} </td>
+                    <td> {{ e.fin }} </td>
+                    <td><span title="{{ e.fecha }}"> Hace {{ e.fecha| timesince }} </span></td>
+                    </tr>
+                  {% endfor %}         
+              </tbody>
+            </table>
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
+
+      <div class="modal modaladd">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Agregar evento</h4>
+      </div>
+      <div class="modal-body">
+      	<form action="/events/add/2/" method="post">
+                {% csrf_token %}
+                <div class="form-group row">
+                    <h5>&nbsp &nbsp Inicio</h5>
+                    <div class="col-md-6"><input type="date" name="iniciofecha" id="iniciofecha" class="form-control" required></div>            
+                    <div class="col-md-6"><input type="time" name="iniciohora" id="iniciohora" class="form-control" required></div>
+                </div>
+
+                <div class="form-group row">
+                    <h5>&nbsp &nbsp Fin</h5>
+                    <div class="col-md-6"><input type="date" name="finfecha" id="finfecha" class="form-control" required></div>            
+                    <div class="col-md-6"><input type="time" name="finhora" id="finhora" class="form-control" required></div>
+                </div>
+                
+                  <div class="form-group form-animate-text" style="margin-top:40px !important;">
+                    <input type="text" name="titulo" id="titulo" class="form-text" required>
+                    <span class="bar"></span>
+                    <label>Titulo</label>
+                </div>
+                <div class="form-group">
+                    <label for="descripcion">Descripción</label>
+                    <textarea name="descripcion" id="descripcion" cols="30" rows="2" class="form-control"></textarea>
+                </div>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancelar</button>
+          <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Agregar</button>
+        </form>  
+      
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="modal modaledit">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Editar evento</h4>
+      </div>
+      <div class="modal-body">
+      	<form action="" id="edit_evennt" method="post">
+                {% csrf_token %}
+                <input type="hidden" id="id-edit" name="id">
+                <div class="form-group row">
+                    <h5>&nbsp &nbsp Inicio</h5>
+                    <div class="col-md-6"><input type="date" name="iniciofecha" id="iniciofecha-edit" class="form-control" required></div>            
+                    <div class="col-md-6"><input type="time" name="iniciohora" id="iniciohora-edit" class="form-control" required></div>
+                </div>
+
+                <div class="form-group row">
+                    <h5>&nbsp &nbsp Fin</h5>
+                    <div class="col-md-6"><input type="date" name="finfecha" id="finfecha-edit" class="form-control" required></div>            
+                    <div class="col-md-6"><input type="time" name="finhora" id="finhora-edit" class="form-control" required></div>
+                </div>
+                
+                  <div class="form-group form-animate-text" style="margin-top:40px !important;">
+                    <input type="text" name="titulo" id="titulo-edit" class="form-text" required>
+                    <span class="bar"></span>
+                    <label>Titulo</label>
+                </div>
+                <div class="form-group">
+                    <label for="descripcion">Descripción</label>
+                    <textarea name="descripcion" id="descripcion-edit" cols="30" rows="2" class="form-control"></textarea>
+                </div>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancelar</button>
+          <button type="submit" class="btn btn-success btn-actualizar"><i class="fa fa-check"></i> Actualizar</button>
+        </form>  
+      
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock  %}
+
+{% block js %}
+<script>
+	$('#datatable').DataTable()
+	$(".btn-editar").click(function(){
+		var _id = $(this).attr('data-id');
+     	var _evento = $(this).attr('data-evento');
+     	var _iniciohora = $(this).attr('data-inicio-hora');
+     	var _iniciofecha = $(this).attr('data-inicio-fecha');
+     	var _finhora = $(this).attr('data-fin-hora');
+     	var _finfecha = $(this).attr('data-fin-fecha');
+     	var _descripcion = $(this).attr('data-descripcion');
+
+     	$("#iniciohora-edit").val(_iniciohora)
+     	$("#iniciofecha-edit").val(_iniciofecha)
+     	$("#finhora-edit").val(_finhora)
+     	$("#finfecha-edit").val(_finfecha)
+     	$("#titulo-edit").val(_evento)
+     	$("#descripcion-edit").val(_descripcion)
+     	$("#id-edit").val(_id)
+	});
+
+	$('.btn-actualizar').click(function(e){
+          e.preventDefault();
+        var _id = $("#id-edit").val()
+     	var _evento = $("#titulo-edit").val()
+     	var _iniciohora = $("#iniciohora-edit").val()
+     	var _iniciofecha = 	$("#iniciofecha-edit").val()
+     	var _finhora = $("#finhora-edit").val()
+     	var _finfecha = $("#finfecha-edit").val()
+     	var _descripcion = 	$("#descripcion-edit").val()
+          var csfrm = $('input[name=csrfmiddlewaretoken]').val()
+          $.ajax({
+            type:'POST',
+            url:'/events/edit/' + _id + '/',
+            data:{
+            evento: _evento,
+            id: _id,
+            iniciohora: _iniciohora,
+            iniciofecha: _iniciofecha,
+            finhora: _finhora,
+            finfecha: _finfecha,
+            descripcion: _descripcion,
+            csrfmiddlewaretoken: csfrm
+            },
+            success: function(){
+              location.reload()
+            },
+        });
+
+      });
+
+
+</script>
+	
+{% endblock  %}

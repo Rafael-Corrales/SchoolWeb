@@ -1,0 +1,108 @@
+{% extends "base_in_admin.html" %}
+
+{% block info %}
+      <div class="col-md-12" style="padding:20px;">
+      <div class="col-md-12 padding-0">
+      <div class="col-md-12 padding-0" align="center">
+ <br>
+   <div class="row container">
+    <div class="col-md-3">
+      <a href="{% url 'new_enroll' %}" class="btn btn-primary pull-right">Nueva matricula</a>
+    </div>
+  </div>
+	<h2>Listado de matriculas en el  {{ aniolectivo }}</h2>
+	<div class="row container">
+			<div class="table-responsive">
+            <table id="datatable" class="table table-condensed table-hover table-striped">
+              <thead>
+                <tr>
+                  <th>Alumno</th> 
+                  <th>GradoSeccion</th>
+                </tr>
+              </thead>
+              <tbody>   
+                 {% for m in mat %}
+                  <tr>
+                    <td> {{ m.alumno.nombre }} {{ m.alumno.apellido }}</td>    
+                    <td>{{ m.ofertagrado.gradoseccion }}</td>       
+                    </tr>
+                  {% endfor %}              
+              </tbody>
+            </table>
+          </div>
+</div>
+	
+
+<div class="modal fade" id="edit_section" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Editar sección</h4>
+      </div>
+      <div class="modal-body">
+        <form action="" method="post">
+                           {% csrf_token %}
+                      <input type="hidden" id="idsectionedit" name="id">
+                      <div class="form-group form-animate-text" style="margin-top:40px !important;">
+                    <input type="text" id="sectionedit" name="clase" class="form-text" required>
+                    <span class="bar"></span>
+                    <label>Sección</label>
+                  </div>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancelar</button>
+          <button type="submit" class="btn btn-success btn-actualizar"><i class="fa fa-check"></i>Actualizar</button>
+        </form>
+      </div>
+  </div>
+  </div>
+</div>  
+
+<div class="modal fade" id="desactive_section" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel">Desactivar seccion</h4>
+      </div>
+      <div class="modal-body">
+        <form action="" method="post">
+                <div class="form-group">
+                    <h3 class="modal-title msj" id="myModalLabel"></h3>
+                </div>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> No</button>
+          <button type="submit" class="btn btn-success"><i class="fa fa-check"></i>Si</button>
+        </form>
+      </div>
+  </div>
+  </div>
+</div>
+
+<div class="modal fade" id="active_section" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel">Activar seccion</h4>
+      </div>
+      <div class="modal-body">
+        <form action="" method="post">
+                <div class="form-group">
+                    <h3 class="modal-title msj" id="myModalLabel"></h3>
+                </div>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> No</button>
+          <button type="submit" class="btn btn-success"><i class="fa fa-check"></i>Si</button>
+        </form>
+      </div>
+  </div>
+  </div>
+</div>
+
+</div>
+</div>
+</div>
+{% endblock %}
+
+{% block js %}
+  <script>
+$(document).ready(function() {
+  $('#datatable').DataTable();
+});
+  </script>
+{% endblock  %}

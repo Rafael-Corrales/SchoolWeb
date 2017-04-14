@@ -1,0 +1,197 @@
+{% extends "base_in_secretaria.html" %}
+
+{% block info %}
+<div class="container">
+<div class="row container">
+	<div class="col-md-11"><h3>Servicio de mensajeria</h3></div>
+<div class="row container">
+  <div class="col-md-3">
+  <br>
+    <a href="" data-toggle="modal" data-target="#new_msg" class="btn btn-primary btn-md btn-3d">Redactar</a>
+    </div>
+
+</div>
+<br>
+		<div class="row container">
+        <div class="col-md-3 mail-left-content">
+                               <ul class="nav">
+                                <li></li>
+                                  <li><br></li>
+                                  <li><h5>Carpeta</h5></li>
+                                  <li>
+                                    <a href="{% url 'msg_index' %}" class="read"><span class="fa fa-inbox"></span> Recibidos ({{ total }})</a>
+                                  </li>
+                                  <li>
+                                    <a href="{% url 'msg_enviados' %}"><span class="fa fa-send-o"></span> Enviados</a>
+                                  </li>
+                              </ul>
+            </div>
+            {% block msg %}
+                                <div class="col-md-8 mail-right-content">
+                   <table id="datatable" class="table table-hover" width="100%" cellspacing="0">
+                      <thead>
+                        <tr>
+                          <th>Remitente</th>
+                          <th>Asunto</th>
+                          <th>Fecha</th>
+                          <th>Acciones</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      {% for msj in msjsr  %}
+                        {% if msj.leido == True %}
+                          <tr>
+                                  <td class="contact">
+                                    {{ msj.remitente }}
+                                    </td>
+                                     <td class="subject">
+                                     {{ msj.asunto }}
+                                      </td>
+                                      <td class="time"><span title="{{ msj.fecha }}">Hace {{ msj.fecha| timesince }}</span></td>
+                                      <td>
+                                                          <div class="btn-group">
+                    <button class="dropdown-toggle btn btn-primary btn-3d btn-sm" data-toggle="dropdown" aria-expanded="true">Acciones &nbsp<span class="fa fa-caret-down"></span></button>
+                    <ul class="dropdown-menu">
+                      <li><a class="btn-leer" data-id="{{ msj.id }}" data-asunto="{{ msj }}"  data-contenido="{{ msj.contenido }}" data-remitente="{{ msj.remitente }}"
+                      data-remitente-id="{{ msj.remitente.id }}" data-nombre-archivo="{{ msj.archivo.name }}" data-archivo="/media/{{ msj.archivo }}" data-toggle="modal" data-target="#view_msg">Leer<span class="fa fa-eye pull-left "></span></a></li>
+                      <li><a class="" href="/message/delete/{{ msj.id }}/" data-id="" data-clase="">Eliminar<span class="fa fa-trash pull-left "></span></a></li>
+                    </ul>
+                  </div>
+                                      </td>
+                                  </tr>
+                                  {% else %}
+                                    <tr class="active">
+                                  <td class="contact">
+                                    {{ msj.remitente }}
+                                    </td>
+                                     <td class="subject">
+                                     {{ msj.asunto }}
+                                      </td>
+                                      <td class="time"><span title="{{ msj.fecha }}">Hace {{ msj.fecha| timesince }}</span></td>
+                                      <td>
+                                                          <div class="btn-group">
+                    <button class="dropdown-toggle btn btn-primary btn-3d btn-sm" data-toggle="dropdown" aria-expanded="true">Acciones &nbsp<span class="fa fa-caret-down"></span></button>
+                    <ul class="dropdown-menu">
+                      <li><a class="btn-leer" data-id="{{ msj.id }}" data-asunto="{{ msj }}"  data-contenido="{{ msj.contenido }}" data-remitente="{{ msj.remitente }}"
+                      data-remitente-id="{{ msj.remitente.id }}" data-nombre-archivo="{{ msj.archivo.name }}" data-archivo="/media/{{ msj.archivo }}" data-toggle="modal" data-target="#view_msg">Leer<span class="fa fa-eye pull-left "></span></a></li>
+                      <li><a class="" href="/message/delete/{{ msj.id }}/" data-id="" data-clase="">Eliminar<span class="fa fa-trash pull-left "></span></a></li>
+                    </ul>
+                  </div>
+                                      </td>
+                                  </tr>
+                        {% endif %}
+
+                      {% endfor %}
+                                  </tbody>
+                              </table>
+                          </div>
+            {% endblock %}
+
+		</div>
+    </div>
+
+      <div class="modal fade" id="new_msg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title" id="myModalLabel">Nuevo mensaje</h4>
+      </div>
+      <div class="modal-body">
+        <form action="/message/new/" enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+        {{ form.remitente }}
+          <div class="form-group">
+              <label for="destinatario">Destinatario</label>
+                {{ form.destinatario }}
+          </div>
+                <div class="form-group form-animate-text" style="margin-top:40px !important;">
+                    {{ form.asunto }}
+                    <span class="bar"></span>
+                    <label>Asunto</label>
+                  </div>
+                  <div class="form-group">
+                   <label for="contenido">Contenido</label>
+                   {{ form.contenido }}
+                  </div>
+                  {{ form.archivo }}
+                <button type="button" class="btn btn-danger btn-3d" data-dismiss="modal"><i class="fa fa-times"></i> Cancelar</button>
+          <button type="submit" class="btn btn-success btn-3d btn-actualizar"><i class="fa fa-check"></i>Enviar</button>
+
+
+        </form>
+      </div>
+  </div>
+  </div>
+</div>
+
+<div class="modal fade" id="view_msg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4  id="modal-title" class="modal-title" id="myModalLabel"></h4>
+      </div>
+      <div class="modal-body">
+        <form action="" method="post">
+        {% csrf_token %}
+                  <h4 id="asuntoo"></h4>
+                  <hr>
+                  <h5 id="contenidoo"></h5>
+                  <hr>
+                  <a id="archivo"></a>
+        </form>
+      </div>
+  </div>
+  </div>
+</div>
+	
+{% endblock %}
+
+{% block js %}
+<script>
+    $(document).ready(function() {
+    $('#id_destinatario').attr("multiple", 'multiple')
+    $("#id_destinatario").select2({
+      tags: true
+    });
+
+    $('#datatable').DataTable();
+    $("#id_archivo").filestyle({input: false});
+    $("#id_archivo").filestyle('size', 'sm');
+    $("#id_archivo").filestyle('buttonName', 'btn-primary btn-md btn btn-3d');
+    $("#id_archivo").filestyle('buttonText', 'Adjuntar archivo');
+    $("#id_archivo").attr('data-iconName','fa fa-folder-open-o');;
+    $(".icon-span-filestyle").removeClass('glyphicon glyphicon-folder-open')
+    $(".icon-span-filestyle").addClass('fa fa-folder-open-o')
+    $("#id_asunto").addClass('form-text')
+    $("#id_contenido").addClass('form-control')
+    $("#id_contenido").attr('rows', '4')
+
+    $('.btn-leer').click(function(e)
+    {
+      e.preventDefault();
+      var _asunto = $(this).attr('data-asunto');
+      var _contenido = $(this).attr('data-contenido');
+      var _remitente = $(this).attr('data-remitente');
+      var _archivo = $(this).attr('data-archivo');
+      var _nombre_archivo = $(this).attr('data-nombre-archivo');
+      var _id = $(this).attr('data-id');
+      $("#asuntoo").text("Asunto: " + _asunto);
+      $("#contenidoo").text(_contenido) ;
+      $("#modal-title").text("Mensaje de " + _remitente)
+      $("#archivo").text(_nombre_archivo)
+      $("#archivo").attr("href", _archivo)
+
+        $.ajax({
+          type:'GET',
+          url:'/message/read/' + _id + "/",
+        success: function(){
+        }
+      });
+
+    });
+
+  });
+</script> 
+{% endblock  %}

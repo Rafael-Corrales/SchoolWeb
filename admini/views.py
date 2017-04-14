@@ -5,6 +5,7 @@ from django.core import serializers
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import TemplateView
 from .models import *
+from .forms import ConfiguracionForm
 
 from django.contrib.auth.models import User
 @login_required()
@@ -203,8 +204,10 @@ def all_classes_offer(request):
 
 @login_required()
 def new_enroll(request):
+	configuracion = Configuracion.objects.get(pk=1)
+	aniolectivo = configuracion.anioactual
 	alumnos = Alumno.objects.all()
-	ofergra = OfertaGrado.objects.all()
+	ofergra = OfertaGrado.objects.filter(anio = aniolectivo)
 	return render(request, 'new_enroll.html', {'alumnos':alumnos, 'ofergra': ofergra})
 
 def new_enroll_add(request):
@@ -275,10 +278,80 @@ def all_tutors(request):
 	return render(request, 'all_tutors.html')
 
 @login_required()
-def settings(request):
-	return render(request, 'settings.html')
+def sections_by_grade(request, pk):
+
+	grado = Grado.objects.get(pk=pk)
+	gradose = GradoSeccion.objects.filter(grado=grado)
+	return render(request, 'sections_by_grade.html', {'grado': grado, 'gradose': gradose})
 
 @login_required()
-def events(request):
-	return render(request, 'events.html')
+def classes_by_grade(request, pk):
+
+	grado = Grado.objects.get(pk=pk)
+	gradoc = GradoClase.objects.filter(grado=grado)
+	return render(request, 'classes_by_grade.html', {'grado': grado, 'gradoc': gradoc})
+@login_required()
+def current_grades_offer(request):
+	configuracion = Configuracion.objects.get(pk=1)
+	aniolectivo = configuracion.anioactual
+	ofergra = OfertaGrado.objects.filter(anio = aniolectivo)
+	return render(request, 'current_grades_offer.html', {'ofg': ofergra})
+@login_required()
+def current_classes_offer(request):
+	configuracion = Configuracion.objects.get(pk=1)
+	aniolectivo = configuracion.anioactual
+	ofergra = OfertaGrado.objects.filter(anio = aniolectivo)
+	mat = Matricula.objects.filter(ofertagrado = ofergra)
+	dm = DetalleMatricula.objects.filter(matricula = mat)
+	return render(request, 'current_classes_offer.html', {'dm': dm})
+@login_required()
+def current_enroll(request):
+	configuracion = Configuracion.objects.get(pk=1)
+	aniolectivo = configuracion.anioactual
+	ofergra = OfertaGrado.objects.filter(anio = aniolectivo)
+	mat = Matricula.objects.filter(ofertagrado = ofergra)
+	return render(request, 'current_enroll.html', {'mat':mat})
+
+@login_required()
+def settings(request):
+	configuracion = Configuracion.objects.get(pk=1)
+	form = 	ConfiguracionForm(instance=configuracion)
+	return render(request, 'settings.html', {'form':form})
+
+@login_required()
+def settings_save(request):
+	configuracion = Configuracion.objects.get(pk=1)
+	if request.method == 'POST':
+		form = ConfiguracionForm(request.POST, request.FILES, instance=configuracion)
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect('/admini/settings/')
+
+@login_required()
+def reports(request):
+	return render(request, 'reports.html')
+
+@login_required()
+def reports_historial(request):
+	alu = Alumno.objects.all()
+	return render(request, 'reports_historial.html', {'alu':alu})
+
+
+@login_required()
+def reports_historial_bystudent(request, pk):
+	alu = Alumno.objects.get(pk = pk)
+	mat = Matricula.objects.filter(alumno = alu)
+	dm = DetalleMatricula.objects.filter(matricula = mat)
+	return render(request, 'reports_historial_bystudent.html', {'dm':dm, 'alu': alu})
+
+@login_required()
+def reports_studentlist(request):
+	og = OfertaGrado.objects.all()
+	return render(request, 'reports_studentlist.html', {'og':og})
+
+@login_required()
+def reports_studentlist_bygrade(request, pk):
+	og = OfertaGrado.objects.get(pk=pk)
+	alu = Matricula.objects.filter(ofertagrado = og)
+	return render(request, 'reports_studentlist_bygrade.html', {'og':og, 'alu':alu})
 

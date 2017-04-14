@@ -11,15 +11,19 @@
                 <span class="middle"></span>
                 <span class="bottom"></span>
               </div>
-                <a href="/" class="navbar-brand"> 
-                 <b>SCHOOL WEB <span class="fa fa-university pull-left"></span></b>
+                <a href="{% url 'index' %}" class="navbar-brand"> 
+                 <b><span class="fa fa-university pull-left"></span></b>
                 </a>
               <ul class="nav navbar-nav navbar-right user-nav">
-               <li><a class="opener-right-menu" id="msg"><span class="fa fa-envelope-o"></span><span class"label" style="position: absolute; top: -2px; right: -1px;"><h4><strong>1</strong></h4></span></a></li>
-               <li ><a class="opener-right-menu" id="notif"><span class="fa fa-bell-o"></span><span class"label" style="position: absolute; top: -2px; right:-1px"><h4><strong>1</strong></h4></span></a></li>
+               <li><a class="opener-right-menu" data-toggle="tooltip" href="/message/bandeja/" data-placement="bottom"title="Ir a mensajes" id="msg"><span class="fa fa-envelope-o"></span>
+               {% if totmsjn > 0 %}
+                 <span class"label" style="position: absolute; top: -2px; right: -1px;"><h4><strong>{{ totmsjn }}</strong></h4></span>
+               {% endif %}
+               </a></li>
+               <li ><a class="opener-right-menu" href="/events/" data-toggle="tooltip" data-placement="bottom" title="Ir al calendario" id="notif"><span class="fa fa-calendar-o"></span></a></li>
                
                   <li class="dropdown avatar-dropdown">
-                   <a alt="user name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="fa fa-user-circle pull-left fa-2x"><span>&nbsp {{ uausuario }} <span class="fa fa-caret-down pull-rigth fa-1x"><span></a>
+                   <a alt="user name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> {{ uausuario }} &nbsp<span class="fa fa-caret-down pull-rigth fa-1x"><span></a>
                    <ul class="dropdown-menu user-dropdown">
                    {% block  miperfil %}
                        
@@ -32,6 +36,7 @@
                     </li>
                   </ul>
                 </li>
+                 <li><a href=""><span class="fa fa-user-circle pull-left fa-2x"><span></a><li>
               </ul>
             </div>
           </div>
@@ -47,99 +52,5 @@
       <div id="content">   
       {% block info %}{% endblock %}
       </div>
-            <div id="right-menu">
-              <ul class="nav nav-tabs">
-                <li>
-                 <a data-toggle="tab" href="#right-menu-user" align="center">
-                 Mensajes
-                 </a>
-                </li>
-              </ul>
-
-              <div class="tab-content">
-                <div id="right-menu-user" class="tab-pane fade in active">
-                  <div class="user col-md-12">
-                   <ul class="nav nav-list">
-                    <li class="online">
-                      <div class="name">
-                        <h5><b>Bill Gates</b></h5>
-                        <p>Hi there.?</p>
-                      </div>
-                      <div class="dot"></div>
-                    </li>
-
-                    <li class="away">
-                      <div class="name">
-                        <h5><b>Bill Gates</b></h5>
-                        <p>Hi there.?</p>
-                      </div>
-                      <div class="dot"></div>
-                    </li>
-                    <li class="offline">
-                      <div class="name">
-                        <h5><b>Bill Gates</b></h5>
-                        <p>Hi there.?</p>
-                      </div>
-                    </li>
-                  </ul>
-                  <a href=""class="btn btn-primary btn-block">Ver todos</a>
-                </div>
-                </div>
-
-              </div>
-            </div>  
-
-
-          <div id="right-menu-2">
-              <ul class="nav nav-tabs">
-                <li>
-                 <a data-toggle="tab" href="#right-menu-notif" align="center">
-                   Notificaciones
-                 </a>
-                </li>
-              </ul>
-
-              <div class="tab-content">
-                  <div id="right-menu-notif" class="tab-pane fade in active">
-                              <div class="col-md-12">
-                              <div class="col-md-1"></div>
-                              <div class="col-md-8">
-                              <ul class="mini-timeline">
-                              <li class="mini-timeline-highlight">
-                               <div class="mini-timeline-panel">
-                                  <h5 class="time">07:00</h5>
-                                <p>Coding!!</p>
-                              </div>
-                            </li>
-
-                            <li class="mini-timeline-highlight">
-                             <div class="mini-timeline-panel">
-                              <h5 class="time">09:00</h5>
-                              <p>Playing The Games</p>
-                            </div>
-                          </li>
-                          <li class="mini-timeline-highlight">
-                           <div class="mini-timeline-panel">
-                            <h5 class="time">12:00</h5>
-                            <p>Meeting with <a href="#">Clients</a></p>
-                          </div>
-                        </li>
-                        <li class="mini-timeline-highlight mini-timeline-warning">
-                         <div class="mini-timeline-panel">
-                          <h5 class="time">15:00</h5>
-                          <p>Breakdown the Personal PC</p>
-                        </div>
-                      </li>
-                    <li></li>
-                  </ul>
-
-                  </div>
-                  <a href=""class="btn btn-primary btn-block">Ver todas</a>
-                  </div>
-                </div>
-
-                
-              </div>
-            </div> 
 </div>
 {% endblock %}

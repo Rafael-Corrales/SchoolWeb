@@ -1,0 +1,40 @@
+{% extends "base_in_admin.html" %}
+
+{% block info %}
+      <div class="col-md-12" style="padding:20px;">
+      <div class="col-md-12 padding-0">
+      <div class="col-md-12 padding-0" align="center">
+  <br>
+	<h2>Listado de secciones de  {{ grado }}</h2>
+	<div class="row container">
+			<div class="table-responsive">
+            <table id="datatable" class="table table-condensed table-hover table-striped" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>Sección</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for gs in gradose %}
+                <tr>
+                <td> {{ gs.seccion }}</td>
+              </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+      </div>
+	</div>	
+</div>
+</div>
+</div>
+
+
+{% endblock %}
+
+{% block js %}
+  <script>
+  $(document).ready(function() {
+    $('#datatable').DataTable();
+});
+  </script>  
+{% endblock  %}
