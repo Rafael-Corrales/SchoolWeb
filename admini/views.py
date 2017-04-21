@@ -208,7 +208,10 @@ def new_enroll(request):
 	aniolectivo = configuracion.anioactual
 	alumnos = Alumno.objects.all()
 	ofergra = OfertaGrado.objects.filter(anio = aniolectivo)
+	mat = Matricula.objects.filter(ofertagrado = ofergra).values_list('alumno_id', flat=True)
+	alumnos = Alumno.objects.exclude(id_in = mat)
 	return render(request, 'new_enroll.html', {'alumnos':alumnos, 'ofergra': ofergra})
+
 
 def new_enroll_add(request):
 	if request.method == 'POST':
@@ -216,18 +219,54 @@ def new_enroll_add(request):
 			gradoOfertado = request.POST.get('ofergrado')
 			alumnos = request.POST.getlist('alumno[]')
 			go = OfertaGrado.objects.get(pk=gradoOfertado)
+			gc = GradoClase.objects.filter(grado = go.gradoseccion.grado)
 			for alumno in alumnos:	
 				a = Alumno.objects.get(pk=alumno)
 				go.cupos = go.cupos - 1
 				mat = Matricula(alumno = a, ofertagrado = go)	
 				mat.save()
+				go.save()
+				for gradoc in gc:
+					ec = EstadoClase.objects.get(pk=1)
+					of = OfertaGrado.objects.get(ofertagrado = go, gradoclase = gradoc)
+					dt = DetalleMatricula(ofertaclase = of, matricula = mat, estadoclase = ec)
+					dt.save()
 			return HttpResponseRedirect('/admini/enroll/new/')
 		except Exception as e:
 			return HttpResponse(e)
 
 @login_required()
 def enroll_massive(request):
-	return render(request, 'massive_enroll.html')
+	ga = OfertaGrado.objects.all()
+	configuracion = Configuracion.objects.get(pk=1)
+	anio = configuracion.anioactual
+	ofergra = OfertaGrado.objects.filter(anio = anio)
+	return render(request, 'massive_enroll.html', {'ga':ga, 'ofergra':ofergra})
+
+@login_required()
+def enroll_massive_add(request):
+		if request.method == 'POST':
+			try:
+				gradoM = request.POST.get('gradom')
+				gradoA = request.POST.get('gradoa')
+				gradoAnterior = OfertaGrado.objects.get(pk=gradoA)
+				alumnos = Matricula.objects.filter(ofertagrado = gradoAnterior)
+				go = OfertaGrado.objects.get(pk=gradoM)
+				gc = GradoClase.objects.filter(grado = go.gradoseccion.grado)
+				for alumno in alumnos:	
+					a = Alumno.objects.get(pk=alumno.alumno.id)
+					go.cupos = go.cupos - 1
+					mat = Matricula(alumno = a, ofertagrado = go)	
+					mat.save()
+					go.save()
+					for gradoc in gc:
+						ec = EstadoClase.objects.get(pk=1)
+						of = OfertaGrado.objects.get(ofertagrado = go, gradoclase = gradoc)
+						dt = DetalleMatricula(ofertaclase = of, matricula = mat, estadoclase = ec)
+						dt.save()
+				return HttpResponseRedirect('/admini/enroll/massive/')
+			except Exception as e:
+				return HttpResponse(e)
 
 @login_required()
 def all_enroll(request):

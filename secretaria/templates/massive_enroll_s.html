@@ -1,39 +1,42 @@
-{% extends "base_in_secretaria.html" %}
+{% extends "base_in_admin.html" %}
 
 {% block info %}
+ <div class="col-md-12" style="padding:20px;">
+      <div class="col-md-12 padding-0">
+      <div class="col-md-12 padding-0" align="center">
+  <br>
+	<div class="row container">
+		<h2>Matricula masiva</h2>
 
-<div class="container" align="">
-
-<h2 align="center">Matricula masiva</h2>
-	<div class="row">
 		<div class="col-md-3"></div>
 		<div class="col-md-6">
 		<h3>Se matricularan los alumnos activos y aprobados al siguiente grado</h3>
-			<form action="" method="post">
+			<form action="/secretaria/enroll/massive/add/" method="post">
 			{% csrf_token %}
 				<div class="form-group">
 					<label for="grado">Grado anterior</label>
-						<select name="grado" id="grado" class="form-control" required>
-  							<option value=""></option>
-  							<option value="">1ero B 2017</option>
-  							<option value="">2ndo B 2017</option>
+						<select name="gradoa" id="grado" class="form-control" required>
+							{% for g in ga %}
+								<option value="{{ g.id }}">{{ g }}</option>
+							{% endfor %}
 						</select>
 				</div>
 				<div class="form-group">
 					<label for="añoa">Grado a matricular</label>
-						<select name="añoa" id="añoa" class="form-control" required>
-  							<option value=""></option>
-  							<option value="">2ndo B 2018</option>
-  							<option value="">3ero B 2018</option>
+						<select name="gradom" id="gradom" class="form-control" required>
+							{% for ofg in ofergra %}
+								<option value="{{ ofg.id }}">{{ ofg }}</option>
+							{% endfor %}
 						</select>
 				</div>
 				<div class="form-group">
-					<input align="center" type="submit" value="Ofertar grado" class="btn btn-primary">
+					<input type="submit" value="Matricular" class="btn btn-primary">
 				</div>
 			</form>
 		</div>
-</div>	
+	</div>
 </div>
-
+</div>
+</div>
 	
 {% endblock %}

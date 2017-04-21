@@ -31,6 +31,7 @@ urlpatterns = [
 	url(r'^class_offer/all/$', views.all_classes_offer, name='all_classes_offer'),
 	url(r'^enroll/new/$', views.new_enroll, name='new_enroll'),
 	url(r'^enroll/massive/$', views.enroll_massive, name='enroll_massive'),
+	url(r'^enroll/massive/add/$', views.enroll_massive, name='enroll_massive'),
 	url(r'^enroll/all/$', views.all_enroll, name='all_enroll'),
 	url(r'^enroll/new/add/$', views.new_enroll_add, name='new_enroll_add'),
 	url(r'^student/new/$', views.new_student, name='new_student'),
